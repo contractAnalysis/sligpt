@@ -3,6 +3,7 @@
 Sligpt is an LLM-based tool to perform function dependency analysis on Solidity smart contracts. It employs GPT-4o to refine the function dependency data produced by Slither. 
 
 [Sligpt paper](https://github.com/contractAnalysis/sligpt)
+
 [Experimenetal data](./results/exp_results/ReadMe.md)
 
 
@@ -17,9 +18,13 @@ git clone https://github.com/contractAnalysis/sligpt.git
 ```
 3, Prepare for the development environment.
 
-- Open the project with Pycharm IDE
-- Create a virtual environment
-- Install the required packages in the virtual environment
+- Open the project with Pycharm IDE by clicking 'File'->'Open' and selecting the downloaded project name. 
+- Create a virtual environment by clicking 'OK' on the pop window of "Creating Virtual Environment".
+
+- Install the required packages in the virtual environment. Execute the following command in terminal of Pycharm IDE to install packages in case the packages failed to be installed in the above step.
+```
+pip install -r requirements.txt --no-deps
+```
 
 4, Run rw.py with proper arguments.
 Take an example on the contract test.sol coming alone with this project.
