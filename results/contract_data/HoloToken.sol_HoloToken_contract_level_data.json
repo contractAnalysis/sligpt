@@ -1,0 +1,45 @@
+{
+    "Ownable": {
+        "name": "Ownable",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "Ownable"
+        ],
+        "code": "contract Ownable {\n  address public owner;\n  event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n  function Ownable() public {\n    owner = msg.sender;\n  }\n  modifier onlyOwner() {\n    require(msg.sender == owner);\n    _;\n  }\n  function transferOwnership(address newOwner) public onlyOwner {\n    require(newOwner != address(0));\n    OwnershipTransferred(owner, newOwner);\n    owner = newOwner;\n  }\n}"
+    },
+    "SafeMath": {
+        "name": "SafeMath",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "SafeMath"
+        ],
+        "code": "library SafeMath {\n  function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n    if (a == 0) {\n      return 0;\n    }\n    uint256 c = a * b;\n    assert(c / a == b);\n    return c;\n  }\n  function div(uint256 a, uint256 b) internal pure returns (uint256) {\n    uint256 c = a / b;\n    return c;\n  }\n  function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n    assert(b <= a);\n    return a - b;\n  }\n  function add(uint256 a, uint256 b) internal pure returns (uint256) {\n    uint256 c = a + b;\n    assert(c >= a);\n    return c;\n  }\n}"
+    },
+    "HoloToken": {
+        "name": "HoloToken",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [
+            "Ownable"
+        ],
+        "dependencies": [
+            "Ownable",
+            "SafeMath"
+        ],
+        "libraries": {
+            "uint256": "SafeMath"
+        },
+        "linearizedBaseContracts": [
+            "Ownable"
+        ],
+        "code": "contract HoloToken is Ownable {\n  string public constant name = \"HoloToken\";\n  string public constant symbol = \"HOT\";\n  uint8 public constant decimals = 18;\n  event Transfer(address indexed from, address indexed to, uint256 value);\n  event Approval(address indexed owner, address indexed spender, uint256 value);\n  event Mint(address indexed to, uint256 amount);\n  event MintingFinished();\n  event Burn(uint256 amount);\n  uint256 public totalSupply;\n  using SafeMath for uint256;\n  mapping(address => uint256) public balances;\n  function transfer(address _to, uint256 _value) public whenMintingFinished returns (bool) {\n    require(_to != address(0));\n    require(_value <= balances[msg.sender]);\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n    balances[_to] = balances[_to].add(_value);\n    Transfer(msg.sender, _to, _value);\n    return true;\n  }\n  function balanceOf(address _owner) public view returns (uint256 balance) {\n    return balances[_owner];\n  }\n  mapping (address => mapping (address => uint256)) public allowed;\n  function transferFrom(address _from, address _to, uint256 _value) public whenMintingFinished returns (bool) {\n    require(_to != address(0));\n    require(_value <= balances[_from]);\n    require(_value <= allowed[_from][msg.sender]);\n    balances[_from] = balances[_from].sub(_value);\n    balances[_to] = balances[_to].add(_value);\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n    Transfer(_from, _to, _value);\n    return true;\n  }\n  function approve(address _spender, uint256 _value) public whenMintingFinished returns (bool) {\n    allowed[msg.sender][_spender] = _value;\n    Approval(msg.sender, _spender, _value);\n    return true;\n  }\n  function allowance(address _owner, address _spender) public view returns (uint256) {\n    return allowed[_owner][_spender];\n  }\n  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n    return true;\n  }\n  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n    uint oldValue = allowed[msg.sender][_spender];\n    oldValue = oldValue + _subtractedValue;\n    if (_subtractedValue > oldValue) {\n      allowed[msg.sender][_spender] = 0;\n    } else {\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n    }\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n    return true;\n  }\n  bool public mintingFinished = false;\n  address public destroyer;\n  address public minter;\n  modifier canMint() {\n    require(!mintingFinished);\n    _;\n  }\n  modifier whenMintingFinished() {\n    require(mintingFinished);\n    _;\n  }\n  modifier onlyMinter() {\n    require(msg.sender == minter);\n    _;\n  }\n  function setMinter(address _minter) external onlyOwner {\n    minter = _minter;\n  }\n  function mint(address _to, uint256 _amount) external onlyMinter canMint  returns (bool) {\n    require(balances[_to] + _amount > balances[_to]); \n    require(totalSupply + _amount > totalSupply);     \n    totalSupply = totalSupply.add(_amount);\n    balances[_to] = balances[_to].add(_amount);\n    Mint(_to, _amount);\n    return true;\n  }\n  function finishMinting() external onlyMinter returns (bool) {\n    mintingFinished = true;\n    MintingFinished();\n    return true;\n  }\n  modifier onlyDestroyer() {\n     require(msg.sender == destroyer);\n     _;\n  }\n  function setDestroyer(address _destroyer) external onlyOwner {\n    destroyer = _destroyer;\n  }\n  function burn(uint256 _amount) external onlyDestroyer {\n    require(balances[destroyer] >= _amount && _amount > 0);\n    balances[destroyer] = balances[destroyer].sub(_amount);\n    totalSupply = totalSupply.sub(_amount);\n    Burn(_amount);\n  }\n}"
+    }
+}

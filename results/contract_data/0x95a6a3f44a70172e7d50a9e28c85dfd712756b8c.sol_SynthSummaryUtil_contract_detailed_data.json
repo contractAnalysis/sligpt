@@ -1,0 +1,247 @@
+{
+    "solidity_file_name": "0x95a6a3f44a70172e7d50a9e28c85dfd712756b8c.sol",
+    "contract_name": "SynthSummaryUtil",
+    "solc_version": "0.4.25",
+    "state_variables": [
+        "synthetix",
+        "exchangeRates"
+    ],
+    "modifiers": [],
+    "events": [],
+    "functions": [
+        "constructor",
+        "totalSynthsInKey",
+        "synthsBalances",
+        "frozenSynths",
+        "synthsRates"
+    ],
+    "state_variable_info": {
+        "synthetix": {
+            "name": "synthetix",
+            "type": "contract ISynthetix",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "ISynthetix public synthetix"
+        },
+        "exchangeRates": {
+            "name": "exchangeRates",
+            "type": "contract IExchangeRates",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "IExchangeRates public exchangeRates"
+        }
+    },
+    "modifier_info": {},
+    "function_info": {
+        "constructor": {
+            "name": "constructor",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_synthetix": {
+                    "name": "_synthetix",
+                    "type": "address"
+                },
+                "_exchangeRates": {
+                    "name": "_exchangeRates",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "synthetix=ISynthetix(_synthetix)",
+                "exchangeRates=IExchangeRates(_exchangeRates)"
+            ],
+            "state_variables_written": [
+                "synthetix",
+                "exchangeRates"
+            ],
+            "function_calls": [],
+            "function_code": "constructor(address _synthetix, address _exchangeRates) public {\n        synthetix = ISynthetix(_synthetix);    \n        exchangeRates = IExchangeRates(_exchangeRates);\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "totalSynthsInKey": {
+            "name": "totalSynthsInKey",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "view",
+            "parameter_info": {
+                "account": {
+                    "name": "account",
+                    "type": "address"
+                },
+                "currencyKey": {
+                    "name": "currencyKey",
+                    "type": "bytes32"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "total",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "",
+                "i<numSynths"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "synthetix.availableSynthCount",
+                "synthetix.availableSynths",
+                "exchangeRates.effectiveValue",
+                "synth.currencyKey",
+                "synth.balanceOf"
+            ],
+            "function_code": "function totalSynthsInKey(address account, bytes32 currencyKey) external view returns (uint total) {\n        uint numSynths = synthetix.availableSynthCount();\n        for (uint i = 0; i < numSynths; i++) {\n            ISynth synth = synthetix.availableSynths(i);\n            total += exchangeRates.effectiveValue(synth.currencyKey(), synth.balanceOf(account), currencyKey);\n        }\n        return total;\n    }",
+            "local_variables": {
+                "numSynths": "synthetix.availableSynthCount()",
+                "synth": "synthetix.availableSynths(i)"
+            },
+            "events": []
+        },
+        "synthsBalances": {
+            "name": "synthsBalances",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "view",
+            "parameter_info": {
+                "account": {
+                    "name": "account",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bytes32[]"
+                },
+                {
+                    "name": "NULL",
+                    "type": "uint256[]"
+                },
+                {
+                    "name": "NULL",
+                    "type": "uint256[]"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "",
+                "i<numSynths"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "synthetix.availableSynthCount",
+                "synthetix.availableSynths",
+                "synth.currencyKey",
+                "synth.balanceOf",
+                "exchangeRates.effectiveValue"
+            ],
+            "function_code": "function synthsBalances(address account) external view returns (bytes32[], uint[],  uint[]) {\n        uint numSynths = synthetix.availableSynthCount();\n        bytes32[] memory currencyKeys = new bytes32[](numSynths);\n        uint[] memory balances = new uint[](numSynths);\n        uint[] memory sUSDBalances = new uint[](numSynths);\n        for (uint i = 0; i < numSynths; i++) {\n            ISynth synth = synthetix.availableSynths(i);\n            currencyKeys[i] = synth.currencyKey();\n            balances[i] = synth.balanceOf(account);\n            sUSDBalances[i] = exchangeRates.effectiveValue(synth.currencyKey(), synth.balanceOf(account), 'sUSD');\n        }\n        return (currencyKeys, balances, sUSDBalances);\n    }",
+            "local_variables": {
+                "numSynths": "synthetix.availableSynthCount()",
+                "currencyKeys": "new bytes32[](numSynths)",
+                "balances": "new uint[](numSynths)",
+                "sUSDBalances": "new uint[](numSynths)",
+                "synth": "synthetix.availableSynths(i)"
+            },
+            "events": []
+        },
+        "frozenSynths": {
+            "name": "frozenSynths",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bytes32[]"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "",
+                "i<numSynths",
+                "exchangeRates.rateIsFrozen(synth.currencyKey())"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "synthetix.availableSynthCount",
+                "synthetix.availableSynths",
+                "exchangeRates.rateIsFrozen",
+                "synth.currencyKey"
+            ],
+            "function_code": "function frozenSynths() external view returns (bytes32[]) {\n        uint numSynths = synthetix.availableSynthCount();\n        bytes32[] memory frozenSynthsKeys = new bytes32[](numSynths);\n        for (uint i = 0; i < numSynths; i++) {\n            ISynth synth = synthetix.availableSynths(i);\n            if (exchangeRates.rateIsFrozen(synth.currencyKey())) {\n                frozenSynthsKeys[i] = synth.currencyKey();\n            }\n        }\n        return frozenSynthsKeys;\n    }",
+            "local_variables": {
+                "numSynths": "synthetix.availableSynthCount()",
+                "frozenSynthsKeys": "new bytes32[](numSynths)",
+                "synth": "synthetix.availableSynths(i)"
+            },
+            "events": []
+        },
+        "synthsRates": {
+            "name": "synthsRates",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bytes32[]"
+                },
+                {
+                    "name": "NULL",
+                    "type": "uint256[]"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                ""
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "synthetix.availableCurrencyKeys"
+            ],
+            "function_code": "function synthsRates() external view returns (bytes32[], uint[]) {\n        bytes32[] memory currencyKeys = synthetix.availableCurrencyKeys();\n        return (currencyKeys, exchangeRates.ratesForCurrencies(currencyKeys));\n    }",
+            "local_variables": {
+                "currencyKeys": "synthetix.availableCurrencyKeys()"
+            },
+            "events": []
+        }
+    },
+    "event_info": {}
+}

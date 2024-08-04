@@ -1,0 +1,410 @@
+{
+    "solidity_file_name": "test.sol",
+    "contract_name": "test",
+    "solc_version": "0.4.25",
+    "state_variables": [
+        "freezing",
+        "flag_add",
+        "flag_subtract",
+        "value",
+        "max",
+        "min"
+    ],
+    "modifiers": [
+        "canUpdate",
+        "canAdd",
+        "canSubtract"
+    ],
+    "events": [],
+    "functions": [
+        "setFreezing",
+        "setValue",
+        "add",
+        "subtract",
+        "setMax",
+        "setMin",
+        "updateFlagAdd",
+        "updateFlagSubtract",
+        "getValue"
+    ],
+    "state_variable_info": {
+        "freezing": {
+            "name": "freezing",
+            "type": "bool",
+            "visibility": "internal",
+            "initial_value": "true",
+            "function_calls": [],
+            "code": "bool freezing=true"
+        },
+        "flag_add": {
+            "name": "flag_add",
+            "type": "bool",
+            "visibility": "internal",
+            "initial_value": "false",
+            "function_calls": [],
+            "code": "bool flag_add=false"
+        },
+        "flag_subtract": {
+            "name": "flag_subtract",
+            "type": "bool",
+            "visibility": "internal",
+            "initial_value": "false",
+            "function_calls": [],
+            "code": "bool flag_subtract=false"
+        },
+        "value": {
+            "name": "value",
+            "type": "int8",
+            "visibility": "internal",
+            "initial_value": "0",
+            "function_calls": [],
+            "code": "int8 value=0"
+        },
+        "max": {
+            "name": "max",
+            "type": "int8",
+            "visibility": "internal",
+            "initial_value": "10",
+            "function_calls": [],
+            "code": "int8 max=10"
+        },
+        "min": {
+            "name": "min",
+            "type": "int8",
+            "visibility": "internal",
+            "initial_value": "1",
+            "function_calls": [],
+            "code": "int8 min=1"
+        }
+    },
+    "modifier_info": {
+        "canUpdate": {
+            "name": "canUpdate",
+            "conditions": [
+                "require(!freezing)"
+            ],
+            "state_variables_read": [
+                "freezing"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier canUpdate() {\n    require(!freezing);\n    _;\n  }"
+        },
+        "canAdd": {
+            "name": "canAdd",
+            "conditions": [
+                "require(flag_add)"
+            ],
+            "state_variables_read": [
+                "flag_add"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier canAdd() {\n    require(flag_add);\n    _;\n  }"
+        },
+        "canSubtract": {
+            "name": "canSubtract",
+            "conditions": [
+                "require(flag_subtract)"
+            ],
+            "state_variables_read": [
+                "flag_subtract"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier canSubtract() {\n    require(flag_subtract);\n    _;\n  }"
+        }
+    },
+    "function_info": {
+        "setFreezing": {
+            "name": "setFreezing",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "freezing"
+            ],
+            "state_variables_read_in_BC": [
+                "freezing"
+            ],
+            "code_statement_write_state_variables": [
+                "freezing=false",
+                "freezing=true"
+            ],
+            "state_variables_written": [
+                "freezing"
+            ],
+            "function_calls": [],
+            "function_code": "function setFreezing() public{\n    if (freezing){freezing=false;}\n    else{freezing=true;}\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "setValue": {
+            "name": "setValue",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "internal",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "v": {
+                    "name": "v",
+                    "type": "int8"
+                },
+                "flag": {
+                    "name": "flag",
+                    "type": "bool"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "flag",
+                "require(getValue()+v<=max)",
+                "require(getValue()-v>=min)"
+            ],
+            "state_variables_read_in_BC": [
+                "max",
+                "min"
+            ],
+            "code_statement_write_state_variables": [
+                "value+=v",
+                "value-=v"
+            ],
+            "state_variables_written": [
+                "value"
+            ],
+            "function_calls": [
+                "require",
+                "getValue"
+            ],
+            "function_code": "function setValue(int8 v, bool flag) internal{\n    if (flag){\n      require(getValue()+v<=max);\n      value+=v;\n    }\n    else{\n      require(getValue()-v>=min);\n      value-=v;\n    }\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "add": {
+            "name": "add",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "v": {
+                    "name": "v",
+                    "type": "int8"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "canUpdate",
+                "canAdd"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "setValue(v,flag_add)",
+                "setValue"
+            ],
+            "function_code": "function add(int8 v) public canUpdate canAdd{\n      setValue(v,flag_add);\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "subtract": {
+            "name": "subtract",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "v": {
+                    "name": "v",
+                    "type": "int8"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "canUpdate",
+                "canSubtract"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "setValue(v,!flag_subtract)",
+                "setValue"
+            ],
+            "function_code": "function subtract(int8 v) public canUpdate canSubtract{\n      setValue(v,!flag_subtract);\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "setMax": {
+            "name": "setMax",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "max_": {
+                    "name": "max_",
+                    "type": "int8"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "max=max_"
+            ],
+            "state_variables_written": [
+                "max"
+            ],
+            "function_calls": [],
+            "function_code": "function setMax(int8 max_) public{\n    max=max_;\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "setMin": {
+            "name": "setMin",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "min_": {
+                    "name": "min_",
+                    "type": "int8"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "min=min_"
+            ],
+            "state_variables_written": [
+                "min"
+            ],
+            "function_calls": [],
+            "function_code": "function setMin(int8 min_) public{\n    min=min_;\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "updateFlagAdd": {
+            "name": "updateFlagAdd",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "getValue()>=max"
+            ],
+            "state_variables_read_in_BC": [
+                "max"
+            ],
+            "code_statement_write_state_variables": [
+                "flag_add=false",
+                "flag_add=true"
+            ],
+            "state_variables_written": [
+                "flag_add"
+            ],
+            "function_calls": [
+                "getValue"
+            ],
+            "function_code": "function updateFlagAdd() public {\n    if (getValue()>=max){\n      flag_add=false;\n    }else{\n      flag_add=true;\n    }\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "updateFlagSubtract": {
+            "name": "updateFlagSubtract",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "getValue()<=min"
+            ],
+            "state_variables_read_in_BC": [
+                "min"
+            ],
+            "code_statement_write_state_variables": [
+                "flag_subtract=false",
+                "flag_subtract=true"
+            ],
+            "state_variables_written": [
+                "flag_subtract"
+            ],
+            "function_calls": [
+                "getValue"
+            ],
+            "function_code": "function updateFlagSubtract() public {\n    if (getValue()<=min){\n      flag_subtract=false;\n    }else{\n      flag_subtract=true;\n    }\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "getValue": {
+            "name": "getValue",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "int8"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function getValue() public returns(int8){return value;}",
+            "local_variables": {},
+            "events": []
+        }
+    },
+    "event_info": {}
+}

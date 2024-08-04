@@ -1,0 +1,464 @@
+{
+    "solidity_file_name": "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol",
+    "contract_name": "simpleToken",
+    "solc_version": "0.4.21",
+    "state_variables": [
+        "totalSupply_",
+        "name",
+        "symbol",
+        "decimals",
+        "initialSupply",
+        "balances",
+        "allowed"
+    ],
+    "modifiers": [],
+    "events": [
+        "Transfer",
+        "Approval"
+    ],
+    "functions": [
+        "totalSupply",
+        "balanceOf",
+        "allowance",
+        "transfer",
+        "approve",
+        "transferFrom",
+        "increaseApproval",
+        "decreaseApproval",
+        "simpleToken"
+    ],
+    "state_variable_info": {
+        "totalSupply_": {
+            "name": "totalSupply_",
+            "type": "uint256",
+            "visibility": "internal",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint256 totalSupply_"
+        },
+        "name": {
+            "name": "name",
+            "type": "string memory",
+            "visibility": "public",
+            "initial_value": "\"Universe\"",
+            "function_calls": [],
+            "code": "string public constant name = \"Universe\""
+        },
+        "symbol": {
+            "name": "symbol",
+            "type": "string memory",
+            "visibility": "public",
+            "initial_value": "\"UNI\"",
+            "function_calls": [],
+            "code": "string public constant symbol = \"UNI\""
+        },
+        "decimals": {
+            "name": "decimals",
+            "type": "uint8",
+            "visibility": "public",
+            "initial_value": "18",
+            "function_calls": [],
+            "code": "uint8 public constant decimals = 18"
+        },
+        "initialSupply": {
+            "name": "initialSupply",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "100000000*(10**uint256(decimals))",
+            "function_calls": [],
+            "code": "uint256 public constant initialSupply = 100000000*(10**uint256(decimals))"
+        },
+        "balances": {
+            "name": "balances",
+            "type": "mapping(address => uint256)",
+            "visibility": "internal",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => uint256) balances"
+        },
+        "allowed": {
+            "name": "allowed",
+            "type": "mapping(address => mapping(address => uint256))",
+            "visibility": "internal",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => mapping (address => uint256)) allowed"
+        }
+    },
+    "modifier_info": {},
+    "function_info": {
+        "totalSupply": {
+            "name": "totalSupply",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function totalSupply() public view returns (uint256){\n        return totalSupply_;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "balanceOf": {
+            "name": "balanceOf",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "_owner": {
+                    "name": "_owner",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function balanceOf(address _owner) public view returns (uint256){\n        return balances[_owner];\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "allowance": {
+            "name": "allowance",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "_owner": {
+                    "name": "_owner",
+                    "type": "address"
+                },
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function allowance(address _owner, address _spender) public view returns (uint256) {\n        return allowed[_owner][_spender];\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "transfer": {
+            "name": "transfer",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(_to!=address(0))",
+                "require(balances[msg.sender]>=_value)"
+            ],
+            "state_variables_read_in_BC": [
+                "balances"
+            ],
+            "code_statement_write_state_variables": [
+                "balances[msg.sender]=balances[msg.sender]-_value",
+                "balances[_to]=balances[_to]+_value"
+            ],
+            "state_variables_written": [
+                "balances"
+            ],
+            "function_calls": [
+                "require"
+            ],
+            "function_code": "function transfer(address _to, uint256 _value) public returns (bool ) {\n        require(_to != address(0));\n        require(balances[msg.sender] >= _value); \n        balances[msg.sender] = balances[msg.sender] - _value; \n        balances[_to] = balances[_to] + _value; \n        emit Transfer(msg.sender, _to, _value);\n        return true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "approve": {
+            "name": "approve",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "allowed[msg.sender][_spender]=_value"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ],
+            "function_calls": [],
+            "function_code": "function approve(address _spender, uint256 _value) public returns (bool) {\n        allowed[msg.sender][_spender] = _value;\n        emit Approval(msg.sender, _spender, _value);\n        return true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "transferFrom": {
+            "name": "transferFrom",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_from": {
+                    "name": "_from",
+                    "type": "address"
+                },
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(_to!=address(0))",
+                "require(_value<=balances[_from])",
+                "require(_value<=allowed[_from][msg.sender])"
+            ],
+            "state_variables_read_in_BC": [
+                "balances",
+                "allowed"
+            ],
+            "code_statement_write_state_variables": [
+                "balances[_from]=balances[_from]-_value",
+                "balances[_to]=balances[_to]+_value",
+                "allowed[_from][msg.sender]=allowed[_from][msg.sender]-_value"
+            ],
+            "state_variables_written": [
+                "balances",
+                "allowed"
+            ],
+            "function_calls": [
+                "require"
+            ],
+            "function_code": "function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n        require(_to != address(0));\n        require(_value <= balances[_from]);\n        require(_value <= allowed[_from][msg.sender]); \n        balances[_from] = balances[_from] - _value; \n        balances[_to] = balances[_to] + _value; \n        allowed[_from][msg.sender] = allowed[_from][msg.sender] - _value; \n        emit Transfer(_from, _to, _value); \n        return true; \n        }",
+            "local_variables": {},
+            "events": []
+        },
+        "increaseApproval": {
+            "name": "increaseApproval",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_addedValue": {
+                    "name": "_addedValue",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "allowed[msg.sender][_spender]=allowed[msg.sender][_spender]+_addedValue"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ],
+            "function_calls": [],
+            "function_code": "function increaseApproval(address _spender, uint _addedValue) public returns (bool) { \n     allowed[msg.sender][_spender] = allowed[msg.sender][_spender] + _addedValue; \n     emit Approval(msg.sender, _spender, allowed[msg.sender][_spender]); \n     return true; \n     }",
+            "local_variables": {},
+            "events": []
+        },
+        "decreaseApproval": {
+            "name": "decreaseApproval",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_subtractedValue": {
+                    "name": "_subtractedValue",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "",
+                "_subtractedValue>oldValue"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "allowed[msg.sender][_spender]=0",
+                "allowed[msg.sender][_spender]=oldValue-_subtractedValue"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ],
+            "function_calls": [],
+            "function_code": "function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) { \n    uint oldValue = allowed[msg.sender][_spender]; \n    if (_subtractedValue > oldValue) {\n        allowed[msg.sender][_spender] = 0;\n    } \n        else {\n        allowed[msg.sender][_spender] = oldValue - _subtractedValue;\n    }\n    emit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n    return true;\n    }",
+            "local_variables": {
+                "oldValue": "allowed[msg.sender][_spender]"
+            },
+            "events": []
+        },
+        "simpleToken": {
+            "name": "simpleToken",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "totalSupply_=initialSupply",
+                "balances[msg.sender]=initialSupply"
+            ],
+            "state_variables_written": [
+                "totalSupply_",
+                "balances"
+            ],
+            "function_calls": [],
+            "function_code": "function simpleToken() public {\n        totalSupply_ = initialSupply;\n        balances[msg.sender] = initialSupply;\n        emit Transfer(0x0, msg.sender, initialSupply);\n    }",
+            "local_variables": {},
+            "events": []
+        }
+    },
+    "event_info": {
+        "Transfer": {
+            "name": "Transfer",
+            "parameter_info": {
+                "from": {
+                    "name": "from",
+                    "type": "address"
+                },
+                "to": {
+                    "name": "to",
+                    "type": "address"
+                },
+                "value": {
+                    "name": "value",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Transfer(address indexed from, address indexed to, uint256 value);"
+        },
+        "Approval": {
+            "name": "Approval",
+            "parameter_info": {
+                "owner": {
+                    "name": "owner",
+                    "type": "address"
+                },
+                "spender": {
+                    "name": "spender",
+                    "type": "address"
+                },
+                "value": {
+                    "name": "value",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Approval(address indexed owner, address indexed spender, uint256 value);"
+        }
+    }
+}

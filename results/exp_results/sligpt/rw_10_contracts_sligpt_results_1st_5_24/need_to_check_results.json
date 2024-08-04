@@ -1,0 +1,294 @@
+{
+    "HoloToken.sol_HoloToken_Ownable.transferOwnership(address)_need_to_check_result": {
+        "Reasoning": "Function transferOwnership(address) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.transfer(address,uint256)_need_to_check_result": {
+        "Reasoning": "The function HoloToken.transfer(address,uint256) contains the following conditions: 'require(_to != address(0))' and 'require(_value <= balances[msg.sender])'. The condition 'require(_value <= balances[msg.sender])' uses the state variable 'balances'. Therefore, constraint 1) is satisfied because the condition uses a state variable. Thus, this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.balanceOf(address)_need_to_check_result": {
+        "Reasoning": "Function HoloToken.balanceOf(address) has a return statement that returns the value of the state variable 'balances' for a given address. However, this return statement does not involve a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.transferFrom(address,address,uint256)_need_to_check_result": {
+        "Reasoning": "Function HoloToken.transferFrom(address,address,uint256) contains multiple require statements that use state variables. Specifically, it uses the state variables 'balances' and 'allowed' in the conditions 'require(_value <= balances[_from])' and 'require(_value <= allowed[_from][msg.sender])'. These conditions are part of assert, require, if, while, for, or ternary operation statements. Therefore, constraint 1) is satisfied, and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.approve(address,uint256)_need_to_check_result": {
+        "Reasoning": "The function HoloToken.approve(address,uint256) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.allowance(address,address)_need_to_check_result": {
+        "Reasoning": "Function HoloToken.allowance(address,address) has the return statement that returns the value of the state variable 'allowed'. However, the return value is not a condition, i.e., it does not use bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.increaseApproval(address,uint256)_need_to_check_result": {
+        "Reasoning": "The function increaseApproval(address, uint256) does not define a local variable that uses a state variable or a function call invoked from a state variable. It does not invoke a function call in a condition from assert, require, if, while, for, or ternary operation statements. It does not have a return statement that returns a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.decreaseApproval(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function decreaseApproval(address, uint256) defines a local variable 'oldValue' that is assigned the value of the state variable 'allowed[msg.sender][_spender]'. This local variable is then used in the condition '_subtractedValue > oldValue' from an if statement. Therefore, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.setMinter(address)_need_to_check_result": {
+        "Reasoning": "Function HoloToken.setMinter(address) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. It directly assigns the input parameter _minter to the state variable minter without any conditions or function calls. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.mint(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function HoloToken.mint(address,uint256) does not define a local variable that uses a state variable or a function call invoked from a state variable. It does not invoke a function call in a condition from assert, require, if, while, for, or ternary operation statements. It does not have a return statement that returns a condition using a state variable. However, it does have a function call not in the return statement, and this function (add from SafeMath) does not satisfy any of the constraints. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.finishMinting()_need_to_check_result": {
+        "Reasoning": "Function HoloToken.finishMinting() sets the state variable 'mintingFinished' to true. However, it does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.setDestroyer(address)_need_to_check_result": {
+        "Reasoning": "Function HoloToken.setDestroyer(address) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "HoloToken.sol_HoloToken_HoloToken.burn(uint256)_need_to_check_result": {
+        "Reasoning": "Function HoloToken.burn(uint256) has a condition 'require(balances[destroyer] >= _amount && _amount > 0)' which uses the state variable 'balances'. This condition is part of a require statement, which is one of the specified statements (assert, require, if, while, for, or ternary operation). Therefore, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.sol_DepositGame_DepositGame.deposit()_need_to_check_result": {
+        "Reasoning": "Function DepositGame.deposit() does not define a local variable that uses a state variable or a function call invoked from a state variable. It does not invoke a function call in a condition from assert, require, if, while, for, or ternary operation statements. It does not have a return statement that returns a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. It also does not call another function that satisfies any of the constraints. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.sol_DepositGame_DepositGame.GetBonusWithdraw()_need_to_check_result": {
+        "Reasoning": "Function GetBonusWithdraw() defines a local variable 'FirstTimeBonus[msg.sender]' that is expressed by the state variable 'FirstTimeBonus'. This local variable is used in the condition 'FirstTimeBonus[msg.sender] != true' from an if statement. Therefore, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.sol_DepositGame_DepositGame.withdraw()_need_to_check_result": {
+        "Reasoning": "function DepositGame.withdraw() defines local variables 'amount', 'randomNumber', and 'pendingWithdrawal'. The local variable 'amount' is assigned the value of the state variable '_balances[msg.sender]'. The local variable 'randomNumber' is assigned the value of the function call 'random() - 10'. The local variable 'pendingWithdrawal' is then used in the condition 'pendingWithdrawal != 0' from an if statement. Additionally, the function 'random()' reads the state variable 'MaxNumber'. Therefore, constraint 1) is satisfied because 'amount' is a local variable defined within the function and is expressed using a state variable, and it is used in a condition. Constraint 2) is also satisfied because 'random()' is invoked in a condition and reads a state variable. Thus, this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.sol_DepositGame_DepositGame.random()_need_to_check_result": {
+        "Reasoning": "Function random() has the return statement that returns the condition 'uint(keccak256(block.timestamp)) % MaxNumber + 1', which involves the state variable 'MaxNumber'. However, the expression 'uint(keccak256(block.timestamp)) % MaxNumber + 1' does not use bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, constraint 3) is not satisfied. Additionally, function random() does not define a local variable, does not have a function call in the condition from a assert, require, if, while, for, or ternary operation statement, and does not invoke another function. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.sol_DepositGame_DepositGame.fallback()_need_to_check_result": {
+        "Reasoning": "The function DepositGame.fallback() does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.sol_DepositGame_DepositGame.destroy()_need_to_check_result": {
+        "Reasoning": "Function DepositGame.destroy() has a condition 'msg.sender == admin' in a require statement, which involves the state variable 'admin'. Additionally, it has another condition 'TotalAmount != 0' in an if statement, which involves the state variable 'TotalAmount'. Therefore, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x822d7b7f27713598e7e19410257e80517916032c.sol_StandardERC20Token_StandardERC20Token.transfer(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function StandardERC20Token.transfer(address,uint256) contains a require statement with the condition 'balances[msg.sender] >= _value'. This condition uses the state variable 'balances'. Therefore, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x822d7b7f27713598e7e19410257e80517916032c.sol_StandardERC20Token_StandardERC20Token.transferFrom(address,address,uint256)_need_to_check_result": {
+        "Reasoning": "Function StandardERC20Token.transferFrom(address,address,uint256) defines a local variable 'allowance' that has the value expressed by the state variable 'allowed'. Then, this local variable is used in the condition 'balances[_from] >= _value && allowance >= _value' from a require statement. So, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x822d7b7f27713598e7e19410257e80517916032c.sol_StandardERC20Token_StandardERC20Token.balanceOf(address)_need_to_check_result": {
+        "Reasoning": "Function balanceOf(address) has the return statement that returns the value of the state variable 'balances' for a given address. However, this return statement does not involve a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x822d7b7f27713598e7e19410257e80517916032c.sol_StandardERC20Token_StandardERC20Token.approve(address,uint256)_need_to_check_result": {
+        "Reasoning": "The function StandardERC20Token.approve(address,uint256) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x822d7b7f27713598e7e19410257e80517916032c.sol_StandardERC20Token_StandardERC20Token.allowance(address,address)_need_to_check_result": {
+        "Reasoning": "function StandardERC20Token.allowance(address,address) has the return statement that returns the value of the state variable 'allowed'. However, this return statement does not return a condition, i.e., an expression using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x2600004fd1585f7270756ddc88ad9cfa10dd0428.sol_GemJoin5_GemJoin5.rely(address)_need_to_check_result": {
+        "Reasoning": "Function GemJoin5.rely(address) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x2600004fd1585f7270756ddc88ad9cfa10dd0428.sol_GemJoin5_GemJoin5.deny(address)_need_to_check_result": {
+        "Reasoning": "Function deny(address) sets the state variable 'wards' to 0. It does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x2600004fd1585f7270756ddc88ad9cfa10dd0428.sol_GemJoin5_GemJoin5.cage()_need_to_check_result": {
+        "Reasoning": "Function GemJoin5.cage() sets the state variable 'live' to 0. However, it does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x2600004fd1585f7270756ddc88ad9cfa10dd0428.sol_GemJoin5_GemJoin5.join(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function GemJoin5.join(address,uint256) has a local variable 'wad18' that is assigned the value from the expression 'mul(wad, 10 ** (18 - dec))'. The expression involves the state variable 'dec'. This local variable 'wad18' is then used in the condition 'require(int(wad18) >= 0, \"GemJoin5/overflow\")' from a require statement. Therefore, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x2600004fd1585f7270756ddc88ad9cfa10dd0428.sol_GemJoin5_GemJoin5.exit(address,uint256)_need_to_check_result": {
+        "Reasoning": "function GemJoin5.exit(address,uint256) defines a local variable 'wad18' that has the value expressed by the state variable 'dec'. Then, this local variable is used in the condition 'int(wad18) >= 0' from a require statement. So, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_Ownable.transferOwnership(address)_need_to_check_result": {
+        "Reasoning": "Function transferOwnership(address) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.initialize()_need_to_check_result": {
+        "Reasoning": "Function SirotTokenICO.initialize() contains the condition 'require(initialized == false)' and 'require(tokensAvailable() == initialTokens)'. The condition 'require(initialized == false)' uses the state variable 'initialized'. The condition 'require(tokensAvailable() == initialTokens)' invokes the function tokensAvailable(), which reads the state variable 'token'. Therefore, constraint 2) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.isActive()_need_to_check_result": {
+        "Reasoning": "Function SirotTokenICO.isActive() has the return statement that returns a condition. The condition is an expression using logic operations (&&) and comparison operations (==, >=, <=). This condition involves the state variables 'initialized', 'START', 'DAYS', and 'raisedAmount'. Therefore, constraint 3) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.goalReached()_need_to_check_result": {
+        "Reasoning": "Function goalReached() has the return statement that returns the condition 'raisedAmount >= CAP * 1 ether', which is an expression using comparison operation '>=', and involves the state variables 'raisedAmount' and 'CAP'. So constraint 3) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.fallback()_need_to_check_result": {
+        "Reasoning": "The function SirotTokenICO.fallback() invokes the function buyTokens(). The function buyTokens() uses the state variable 'raisedAmount' in the statement 'raisedAmount = raisedAmount.add(msg.value);'. Therefore, constraint 4) is satisfied for function SirotTokenICO.fallback(). So this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.receive()_need_to_check_result": {
+        "Reasoning": "Function SirotTokenICO.receive() invokes the function buyTokens(). The function buyTokens() has a require statement that checks the condition 'msg.value > 0', which does not involve any state variables. However, buyTokens() also updates the state variable 'raisedAmount' and calls the function 'token.transfer()' which is an external function call. Since buyTokens() does not satisfy constraints 1, 2, or 3 directly, we need to check if it satisfies constraint 4. Constraint 4 is satisfied if the function call (buyTokens()) satisfies one of the first three constraints. Since buyTokens() does not satisfy constraints 1, 2, or 3, constraint 4 is not satisfied for SirotTokenICO.receive(). Therefore, the function SirotTokenICO.receive() does not need to be checked.",
+        "Answer": "no"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.buyTokens()_need_to_check_result": {
+        "Reasoning": "Function SirotTokenICO.buyTokens() invokes the function token.transfer(msg.sender, tokens). The function token.transfer() is an external function call to the Token interface, which is not defined within the SirotTokenICO contract. Therefore, we need to check if this external function call satisfies any of the constraints. However, the function token.transfer() does not read or use any state variables from the SirotTokenICO contract. Additionally, the function SirotTokenICO.buyTokens() does not define any local variables that use state variables, does not have a function call in a condition from assert, require, if, while, for, or ternary operation statements, and does not have a return statement that returns a condition using state variables. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.tokensAvailable()_need_to_check_result": {
+        "Reasoning": "Function tokensAvailable() has the return statement that returns the condition 'token.balanceOf(address(this))', which is an expression involving the state variable 'token'. Therefore, constraint 3) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol_SirotTokenICO_SirotTokenICO.destroy()_need_to_check_result": {
+        "Reasoning": "Function SirotTokenICO.destroy() defines a local variable 'balance' that has the value expressed by the state variable 'token' through the function call 'token.balanceOf(address(this))'. Then, this local variable is used in the condition 'balance > 0' from an assert statement. So, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.totalSupply()_need_to_check_result": {
+        "Reasoning": "Function totalSupply() has the return statement that returns the state variable 'totalSupply_'. However, the return statement does not return a condition, i.e., an expression using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.balanceOf(address)_need_to_check_result": {
+        "Reasoning": "Function balanceOf(address) has the return statement that returns the value of the state variable 'balances'. However, the return value is not a condition, i.e., it does not use bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.allowance(address,address)_need_to_check_result": {
+        "Reasoning": "Function simpleToken.allowance(address,address) has a return statement that returns the value of the state variable 'allowed'. However, the return statement does not involve a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.transfer(address,uint256)_need_to_check_result": {
+        "Reasoning": "The function transfer(address, uint256) does not define a local variable that uses a state variable or a function call invoked from a state variable. It does not invoke a function call in a condition from assert, require, if, while, for, or ternary operation statements. It does not have a return statement that returns a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.approve(address,uint256)_need_to_check_result": {
+        "Reasoning": "The function simpleToken.approve(address,uint256) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.transferFrom(address,address,uint256)_need_to_check_result": {
+        "Reasoning": "Function transferFrom(address, address, uint256) contains multiple require statements that use state variables. Specifically, it uses the state variables 'balances' and 'allowed' in the conditions 'require(_value <= balances[_from])' and 'require(_value <= allowed[_from][msg.sender])'. These conditions involve comparison operations and use state variables, satisfying constraint 1). Therefore, this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.increaseApproval(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function increaseApproval(address, uint256) does not define a local variable that uses a state variable or a function call invoked from a state variable. It does not invoke a function call in a condition from assert, require, if, while, for, or ternary operation statements. It does not have a return statement that returns a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.sol_simpleToken_simpleToken.decreaseApproval(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function decreaseApproval(address, uint256) defines a local variable 'oldValue' that has the value expressed by the state variable 'allowed'. Then, this local variable is used in the condition '_subtractedValue > oldValue' from an if statement. So, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.toggleContract(bool)_need_to_check_result": {
+        "Reasoning": "Function toggleContract(bool) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.updateAragon(address)_need_to_check_result": {
+        "Reasoning": "Function PiggericksShop.updateAragon(address) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.updateOwner(address)_need_to_check_result": {
+        "Reasoning": "Function updateOwner(address) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.moveFund(uint256)_need_to_check_result": {
+        "Reasoning": "Function PiggericksShop.moveFund(uint256) invokes the function daitoken.balanceOf(address(this)) in the condition 'daitoken.balanceOf(address(this)) > 0' from an if statement. The function daitoken.balanceOf(address(this)) reads the state variable 'daitoken'. Therefore, constraint 2) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.receiveDai(bytes32,bytes32,uint256)_need_to_check_result": {
+        "Reasoning": "The function receiveDai(bytes32,bytes32,uint256) calls the function transferFrom of the DaiToken interface. However, this function call is not within a condition from assert, require, if, while, for, or ternary operation statements. Additionally, the function does not define a local variable, does not have a function call in a condition, and does not have a return statement that returns a condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.receive(bytes32,bytes32)_need_to_check_result": {
+        "Reasoning": "Function PiggericksShop.receive(bytes32,bytes32) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.refund(uint256,address)_need_to_check_result": {
+        "Reasoning": "Function refund(uint256, address) has a require statement with the condition '0 < amt && amt < address(this).balance'. This condition uses comparison operations and logical operations, but it does not involve any state variables. Additionally, the function does not define any local variables, nor does it invoke any function calls in the condition or return statement. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.viewOwner()_need_to_check_result": {
+        "Reasoning": "function PiggericksShop.viewOwner() has the return statement that returns the state variable 'owner' of type address. However, the return statement does not involve a condition, i.e., an expression using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.viewAragon()_need_to_check_result": {
+        "Reasoning": "function viewAragon() has the return statement that returns the state variable 'aragon'. However, the return statement does not return a condition, i.e., an expression using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol_PiggericksShop_PiggericksShop.viewIsOpen()_need_to_check_result": {
+        "Reasoning": "function viewIsOpen() has the return statement that returns the condition 'isActive', which is a variable of bool type and is a state variable. So constraint 3) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0xdb6bcae929767e657884b03974c849d46352cde4.sol_ERC20Latte_ERC20Latte.transfer(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function ERC20Latte.transfer(address,uint256) has a require statement with the condition 'balances[msg.sender] >= _value'. This condition uses the state variable 'balances'. Therefore, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0xdb6bcae929767e657884b03974c849d46352cde4.sol_ERC20Latte_ERC20Latte.transferFrom(address,address,uint256)_need_to_check_result": {
+        "Reasoning": "Function ERC20Latte.transferFrom(address,address,uint256) defines a local variable 'allowance' that has the value expressed by the state variable 'allowed'. Then, this local variable is used in the condition 'balances[_from] >= _value && allowance >= _value' from a require statement. So, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0xdb6bcae929767e657884b03974c849d46352cde4.sol_ERC20Latte_ERC20Latte.balanceOf(address)_need_to_check_result": {
+        "Reasoning": "Function ERC20Latte.balanceOf(address) has the return statement that returns the state variable 'balances[_owner]'. However, this return statement does not involve a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0xdb6bcae929767e657884b03974c849d46352cde4.sol_ERC20Latte_ERC20Latte.approve(address,uint256)_need_to_check_result": {
+        "Reasoning": "Function ERC20Latte.approve(address,uint256) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0xdb6bcae929767e657884b03974c849d46352cde4.sol_ERC20Latte_ERC20Latte.allowance(address,address)_need_to_check_result": {
+        "Reasoning": "The function ERC20Latte.allowance(address,address) has the return statement that returns the value of the state variable 'allowed'. However, the return value is not a condition, i.e., it does not use bitwise operations, logic operations, comparison operations, or variables of bool type. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0x95a6a3f44a70172e7d50a9e28c85dfd712756b8c.sol_SynthSummaryUtil_SynthSummaryUtil.totalSynthsInKey(address,bytes32)_need_to_check_result": {
+        "Reasoning": "function totalSynthsInKey(address, bytes32) defines a local variable 'numSynths' that has the value expressed by the state variable 'synthetix' through the function call 'synthetix.availableSynthCount()'. Then, this local variable is used in the condition 'i < numSynths' from a for loop statement. So, constraint 1) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x95a6a3f44a70172e7d50a9e28c85dfd712756b8c.sol_SynthSummaryUtil_SynthSummaryUtil.synthsBalances(address)_need_to_check_result": {
+        "Reasoning": "Function synthsBalances(address) defines local variables 'currencyKeys', 'balances', and 'sUSDBalances'. It uses these local variables in a for loop, where it calls functions 'synthetix.availableSynths(i)', 'synth.currencyKey()', 'synth.balanceOf(account)', and 'exchangeRates.effectiveValue(synth.currencyKey(), synth.balanceOf(account), 'sUSD')'. These function calls involve state variables 'synthetix' and 'exchangeRates'. Therefore, constraint 1) is satisfied, and this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x95a6a3f44a70172e7d50a9e28c85dfd712756b8c.sol_SynthSummaryUtil_SynthSummaryUtil.frozenSynths()_need_to_check_result": {
+        "Reasoning": "Function frozenSynths() defines a local variable 'synth' that is assigned the value from the state variable 'synthetix' through the function call 'synthetix.availableSynths(i)'. This local variable 'synth' is then used in the condition 'exchangeRates.rateIsFrozen(synth.currencyKey())' from an if statement. The function 'exchangeRates.rateIsFrozen' reads the state variable 'exchangeRates'. Therefore, constraint 2) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0x95a6a3f44a70172e7d50a9e28c85dfd712756b8c.sol_SynthSummaryUtil_SynthSummaryUtil.synthsRates()_need_to_check_result": {
+        "Reasoning": "The function synthsRates() does not define a local variable that uses a state variable or a function call invoked from a state variable. It does not invoke a function call in a condition from assert, require, if, while, for, or ternary operation statements. It does not have a return statement that returns a condition using bitwise operations, logic operations, comparison operations, or variables of bool type. It does invoke the function synthetix.availableCurrencyKeys() and exchangeRates.ratesForCurrencies(currencyKeys), but these function calls are not in a condition or return statement that returns a condition. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_managed.setManager(address)_need_to_check_result": {
+        "Reasoning": "Function setManager(address) invokes a require statement with the condition 'newmanager.balance > 0'. This condition involves a function call 'newmanager.balance', which is a property of the address type and does not directly involve any state variables. The function then assigns the new manager to the state variable 'manager'. However, the condition itself does not read or use any state variables. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_digitalNotary.setContractSwitch()_need_to_check_result": {
+        "Reasoning": "Function digitalNotary.setContractSwitch() does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_digitalNotary.setRegistrationFee(uint256)_need_to_check_result": {
+        "Reasoning": "Function digitalNotary.setRegistrationFee(uint256) does not define a local variable, does not have a function call in the condition from an assert, require, if, while, for, or ternary operation statement, and does not have the return statement that returns the condition using a state variable. The require statement 'require(newfee > 0, \"Registration Fee should be > 0\")' does not involve any state variables. Therefore, none of the constraints are satisfied.",
+        "Answer": "no"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_digitalNotary.setChangeOwnerFee(uint256)_need_to_check_result": {
+        "Reasoning": "Function digitalNotary.setChangeOwnerFee(uint256) contains a require statement with the condition 'newfee > 0'. This condition does not involve any state variables or function calls. The function then assigns the value of 'newfee' to the state variable 'changeownerfee', but this assignment is not part of a condition. Therefore, none of the constraints are satisfied. So this function is not needed to be checked.",
+        "Answer": "no"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_digitalNotary.getFileHashExists(bytes32)_need_to_check_result": {
+        "Reasoning": "Function getFileHashExists(bytes32) has the return statement that returns the condition 'FileHashCurrentOwnerMap[filehash] != address(0)', which is an expression using comparison operation '!=', and involves the state variable 'FileHashCurrentOwnerMap'. So constraint 3) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_digitalNotary.getFileHashCurrentOwner(bytes32)_need_to_check_result": {
+        "Reasoning": "Function getFileHashCurrentOwner(bytes32) invokes the function getFileHashExists(bytes32) in the condition 'require(getFileHashExists(filehash) == true, \"File hash not registered\")' from a require statement. The function getFileHashExists(bytes32) reads the state variable 'FileHashCurrentOwnerMap'. Therefore, constraint 2) is satisfied and thus this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_digitalNotary.RegisterFileHash(bytes32)_need_to_check_result": {
+        "Reasoning": "Function RegisterFileHash(bytes32) has multiple require statements that use state variables. Specifically, it checks if 'contractactive' is true, 'getFileHashExists(filehash)' is false, and 'msg.value' equals 'registrationfee'. The function 'getFileHashExists' reads the state variable 'FileHashCurrentOwnerMap'. Therefore, constraint 2) is satisfied. Additionally, the function updates the state variable 'FileHashCurrentOwnerMap' and emits an event. Thus, this function is needed to be checked.",
+        "Answer": "yes"
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol_digitalNotary_digitalNotary.transferOwnership(bytes32,address)_need_to_check_result": {
+        "Reasoning": "The function transferOwnership(bytes32, address) in the contract digitalNotary has several require statements that involve conditions. Specifically, the condition 'getFileHashCurrentOwner(filehash) == msg.sender' invokes the function getFileHashCurrentOwner(bytes32), which in turn invokes the function getFileHashExists(bytes32) that reads the state variable FileHashCurrentOwnerMap. This satisfies constraint 2). Therefore, this function is needed to be checked.",
+        "Answer": "yes"
+    }
+}

@@ -1,0 +1,291 @@
+{
+    "solidity_file_name": "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.sol",
+    "contract_name": "DepositGame",
+    "solc_version": "0.4.25",
+    "state_variables": [
+        "_balances",
+        "FirstTimeBonus",
+        "admin",
+        "TotalAmount",
+        "MaxNumber",
+        "randomTN"
+    ],
+    "modifiers": [],
+    "events": [],
+    "functions": [
+        "DepositGame",
+        "deposit",
+        "GetBonusWithdraw",
+        "withdraw",
+        "random",
+        "fallback",
+        "destroy"
+    ],
+    "state_variable_info": {
+        "_balances": {
+            "name": "_balances",
+            "type": "mapping(address => uint256)",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => uint) public _balances"
+        },
+        "FirstTimeBonus": {
+            "name": "FirstTimeBonus",
+            "type": "mapping(address => bool)",
+            "visibility": "private",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => bool) private FirstTimeBonus"
+        },
+        "admin": {
+            "name": "admin",
+            "type": "address",
+            "visibility": "internal",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "address admin"
+        },
+        "TotalAmount": {
+            "name": "TotalAmount",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint public TotalAmount"
+        },
+        "MaxNumber": {
+            "name": "MaxNumber",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "20",
+            "function_calls": [],
+            "code": "uint public constant MaxNumber = 20"
+        },
+        "randomTN": {
+            "name": "randomTN",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint public randomTN"
+        }
+    },
+    "modifier_info": {},
+    "function_info": {
+        "DepositGame": {
+            "name": "DepositGame",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "payable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "admin=msg.sender",
+                "TotalAmount=msg.value"
+            ],
+            "state_variables_written": [
+                "admin",
+                "TotalAmount"
+            ],
+            "function_calls": [],
+            "function_code": "function DepositGame() public payable{\n        admin = msg.sender;\n        TotalAmount = msg.value;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "deposit": {
+            "name": "deposit",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "payable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "_balances[msg.sender]+=msg.value",
+                "TotalAmount+=msg.value",
+                "FirstTimeBonus[msg.sender]=false"
+            ],
+            "state_variables_written": [
+                "_balances",
+                "TotalAmount",
+                "FirstTimeBonus"
+            ],
+            "function_calls": [],
+            "function_code": "function deposit() public payable{\n        _balances[msg.sender] += msg.value;\n        TotalAmount += msg.value;\n        FirstTimeBonus[msg.sender] = false;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "GetBonusWithdraw": {
+            "name": "GetBonusWithdraw",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "payable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "FirstTimeBonus[msg.sender]!=true"
+            ],
+            "state_variables_read_in_BC": [
+                "FirstTimeBonus"
+            ],
+            "code_statement_write_state_variables": [
+                "_balances[msg.sender]+=10",
+                "FirstTimeBonus[msg.sender]=true"
+            ],
+            "state_variables_written": [
+                "_balances",
+                "FirstTimeBonus"
+            ],
+            "function_calls": [
+                "withdraw()",
+                "withdraw"
+            ],
+            "function_code": "function GetBonusWithdraw() public payable{      \n        if (FirstTimeBonus[msg.sender] != true){\n            _balances[msg.sender] += 10;\n            withdraw();  \n        }\n        FirstTimeBonus[msg.sender] = true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "withdraw": {
+            "name": "withdraw",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "payable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "",
+                "pendingWithdrawal!=0",
+                "require(msg.sender.call.value(pendingWithdrawal)(\"\"))"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "_balances[msg.sender]-=pendingWithdrawal",
+                "TotalAmount-=pendingWithdrawal"
+            ],
+            "state_variables_written": [
+                "_balances",
+                "TotalAmount"
+            ],
+            "function_calls": [
+                "random",
+                "require",
+                "msg.sender.call.value"
+            ],
+            "function_code": "function withdraw() public payable{\n        uint amount;\n        uint randomNumber;\n        uint pendingWithdrawal;\n        amount = _balances[msg.sender];\n        randomNumber = random() - 10; \n        pendingWithdrawal = amount * (100 + randomNumber) / 100;\n        if (pendingWithdrawal != 0) {\n            _balances[msg.sender] -= pendingWithdrawal;\n            require(msg.sender.call.value(pendingWithdrawal)(\"\"));\n        }  \n        TotalAmount -= pendingWithdrawal;\n    }",
+            "local_variables": {
+                "amount": "",
+                "randomNumber": "",
+                "pendingWithdrawal": ""
+            },
+            "events": []
+        },
+        "random": {
+            "name": "random",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function random() returns (uint256) \n    {\n        return uint(keccak256(block.timestamp)) % MaxNumber + 1;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "fallback": {
+            "name": "fallback",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "payable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "TotalAmount+=msg.value"
+            ],
+            "state_variables_written": [
+                "TotalAmount"
+            ],
+            "function_calls": [
+                "revert()",
+                "revert"
+            ],
+            "function_code": "function() external payable {\n        TotalAmount += msg.value;\n        revert();\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "destroy": {
+            "name": "destroy",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(msg.sender==admin)",
+                "TotalAmount!=0",
+                "require(msg.sender.call.value(TotalAmount)(\"\"))"
+            ],
+            "state_variables_read_in_BC": [
+                "admin",
+                "TotalAmount"
+            ],
+            "code_statement_write_state_variables": [
+                "TotalAmount=0"
+            ],
+            "state_variables_written": [
+                "TotalAmount"
+            ],
+            "function_calls": [
+                "require",
+                "msg.sender.call.value",
+                "selfdestruct(msg.sender)",
+                "selfdestruct"
+            ],
+            "function_code": "function destroy() public {\n        require(msg.sender == admin);\n        if (TotalAmount != 0) {\n            require (msg.sender.call.value(TotalAmount)(\"\")); \n            TotalAmount = 0;\n        }\n        selfdestruct(msg.sender);\n    }",
+            "local_variables": {},
+            "events": []
+        }
+    },
+    "event_info": {}
+}

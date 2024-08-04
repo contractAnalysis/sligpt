@@ -1,0 +1,375 @@
+{
+    "solidity_file_name": "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.sol",
+    "contract_name": "SirotTokenICO",
+    "solc_version": "0.6.0",
+    "state_variables": [
+        "token",
+        "Info",
+        "RATE",
+        "CAP",
+        "START",
+        "DAYS",
+        "initialTokens",
+        "initialized",
+        "raisedAmount"
+    ],
+    "modifiers": [
+        "whenSaleIsActive"
+    ],
+    "events": [
+        "BoughtTokens"
+    ],
+    "functions": [
+        "constructor",
+        "initialize",
+        "isActive",
+        "goalReached",
+        "fallback",
+        "buyTokens",
+        "tokensAvailable",
+        "destroy"
+    ],
+    "state_variable_info": {
+        "token": {
+            "name": "token",
+            "type": "contract Token",
+            "visibility": "internal",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "Token token"
+        },
+        "Info": {
+            "name": "Info",
+            "type": "string",
+            "visibility": "public",
+            "initial_value": "\"Do not call buyTokens directly. Use sale.sirottoken.com\"",
+            "function_calls": [],
+            "code": "string public constant Info = \"Do not call buyTokens directly. Use sale.sirottoken.com\""
+        },
+        "RATE": {
+            "name": "RATE",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "125000",
+            "function_calls": [],
+            "code": "uint256 public constant RATE = 125000"
+        },
+        "CAP": {
+            "name": "CAP",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "500",
+            "function_calls": [],
+            "code": "uint256 public constant CAP = 500"
+        },
+        "START": {
+            "name": "START",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "1593705081",
+            "function_calls": [],
+            "code": "uint256 public constant START = 1593705081"
+        },
+        "DAYS": {
+            "name": "DAYS",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "92",
+            "function_calls": [],
+            "code": "uint256 public constant DAYS = 92"
+        },
+        "initialTokens": {
+            "name": "initialTokens",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "50000000*10**18",
+            "function_calls": [],
+            "code": "uint256 public constant initialTokens = 50000000 * 10**18"
+        },
+        "initialized": {
+            "name": "initialized",
+            "type": "bool",
+            "visibility": "public",
+            "initial_value": "false",
+            "function_calls": [],
+            "code": "bool public initialized = false"
+        },
+        "raisedAmount": {
+            "name": "raisedAmount",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "0",
+            "function_calls": [],
+            "code": "uint256 public raisedAmount = 0"
+        }
+    },
+    "modifier_info": {
+        "whenSaleIsActive": {
+            "name": "whenSaleIsActive",
+            "conditions": [
+                "assert(isActive())"
+            ],
+            "state_variables_read": [],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "assert",
+                "isActive"
+            ],
+            "code": "modifier whenSaleIsActive() {\n    assert(isActive());\n    _;\n  }"
+        }
+    },
+    "function_info": {
+        "constructor": {
+            "name": "constructor",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                ""
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "token=Token(_tokenAddr)"
+            ],
+            "state_variables_written": [
+                "token"
+            ],
+            "function_calls": [],
+            "function_code": "constructor() public {\n      address _tokenAddr = 0x5eA0F26b81DC67d2463020614650d9325C8adbE7;\n      token = Token(_tokenAddr);\n  }",
+            "local_variables": {
+                "_tokenAddr": "0x5eA0F26b81DC67d2463020614650d9325C8adbE7"
+            },
+            "events": []
+        },
+        "initialize": {
+            "name": "initialize",
+            "selector": "8129fc1c",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [
+                "onlyOwner"
+            ],
+            "branch_conditions": [
+                "require(initialized==false)",
+                "require(tokensAvailable()==initialTokens)"
+            ],
+            "state_variables_read_in_BC": [
+                "initialized",
+                "initialTokens"
+            ],
+            "code_statement_write_state_variables": [
+                "initialized=true"
+            ],
+            "state_variables_written": [
+                "initialized"
+            ],
+            "function_calls": [
+                "require",
+                "tokensAvailable"
+            ],
+            "function_code": "function initialize() public onlyOwner {\n      require(initialized == false);\n      require(tokensAvailable() == initialTokens);\n      initialized = true;\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "isActive": {
+            "name": "isActive",
+            "selector": "22f3e2d4",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function isActive() public view returns (bool) {\n    return (\n        initialized == true &&\n        now >= START &&\n        now <= START.add(DAYS * 1 days) &&\n        goalReached() == false\n    );\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "goalReached": {
+            "name": "goalReached",
+            "selector": "7d3d6522",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function goalReached() public view returns (bool) {\n    return (raisedAmount >= CAP * 1 ether);\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "fallback": {
+            "name": "fallback",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "payable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "buyTokens()",
+                "buyTokens"
+            ],
+            "function_code": "receive() external payable {\n    buyTokens();\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "buyTokens": {
+            "name": "buyTokens",
+            "selector": "d0febe4c",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "payable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [
+                "whenSaleIsActive"
+            ],
+            "branch_conditions": [
+                "require(msg.value>0)",
+                ""
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "raisedAmount=raisedAmount.add(msg.value)"
+            ],
+            "state_variables_written": [
+                "raisedAmount"
+            ],
+            "function_calls": [
+                "require",
+                "weiAmount.mul",
+                "raisedAmount.add",
+                "token.transfer(msg.sender,tokens)",
+                "token.transfer",
+                "ownerpayable.transfer(msg.value)",
+                "ownerpayable.transfer"
+            ],
+            "function_code": "function buyTokens() public payable whenSaleIsActive {\n    require(msg.value > 0);\n    uint256 weiAmount = msg.value;\n    uint256 tokens = weiAmount.mul(RATE);\n    emit BoughtTokens(msg.sender, tokens);\n    raisedAmount = raisedAmount.add(msg.value);\n    token.transfer(msg.sender, tokens);\n    ownerpayable.transfer(msg.value);\n  }",
+            "local_variables": {
+                "weiAmount": "msg.value",
+                "tokens": "weiAmount.mul(RATE)"
+            },
+            "events": []
+        },
+        "tokensAvailable": {
+            "name": "tokensAvailable",
+            "selector": "60659a92",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function tokensAvailable() public view returns (uint256) {\n    return token.balanceOf(address(this));\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "destroy": {
+            "name": "destroy",
+            "selector": "83197ef0",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [
+                "onlyOwner"
+            ],
+            "branch_conditions": [
+                "",
+                "assert(balance>0)"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "token.balanceOf",
+                "assert",
+                "token.transfer(owner,balance)",
+                "token.transfer",
+                "selfdestruct(ownerpayable)",
+                "selfdestruct"
+            ],
+            "function_code": "function destroy() onlyOwner public {\n    uint256 balance = token.balanceOf(address(this));\n    assert(balance > 0);\n    token.transfer(owner, balance); \n    selfdestruct(ownerpayable);\n  }",
+            "local_variables": {
+                "balance": "token.balanceOf(address(this))"
+            },
+            "events": []
+        }
+    },
+    "event_info": {
+        "BoughtTokens": {
+            "name": "BoughtTokens",
+            "parameter_info": {
+                "to": {
+                    "name": "to",
+                    "type": "address"
+                },
+                "value": {
+                    "name": "value",
+                    "type": "uint256"
+                }
+            },
+            "code": "event BoughtTokens(address indexed to, uint256 value);"
+        }
+    }
+}

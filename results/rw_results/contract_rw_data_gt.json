@@ -1,0 +1,958 @@
+{
+    "HoloToken.solHoloToken": {
+        "Ownable.transferOwnership(address)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": [
+                "owner"
+            ]
+        },
+        "HoloToken.transfer(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "mintingFinished",
+                "balances"
+            ],
+            "state_variables_written": [
+                "balances"
+            ]
+        },
+        "HoloToken.balanceOf(address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [],
+            "modifiers": []
+        },
+        "HoloToken.transferFrom(address,address,uint256)": {
+            "state_variables_read_in_BC": [
+                "allowed",
+                "mintingFinished",
+                "balances"
+            ],
+            "state_variables_written": [
+                "allowed",
+                "balances"
+            ]
+        },
+        "HoloToken.approve(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "mintingFinished"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "HoloToken.allowance(address,address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [],
+            "modifiers": []
+        },
+        "HoloToken.increaseApproval(address,uint256)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "HoloToken.decreaseApproval(address,uint256)": {
+            "state_variables_read_in_BC": ["allowed"],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "HoloToken.setMinter(address)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": [
+                "minter"
+            ]
+        },
+        "HoloToken.mint(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "minter",
+                "mintingFinished",
+                "totalSupply",
+                "balances"
+            ],
+            "state_variables_written": [
+                "totalSupply",
+                "balances"
+            ]
+        },
+        "HoloToken.finishMinting()": {
+            "state_variables_read_in_BC": [
+                "minter"
+            ],
+            "state_variables_written": [
+                "mintingFinished"
+            ]
+        },
+        "HoloToken.setDestroyer(address)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": [
+                "destroyer"
+            ]
+        },
+        "HoloToken.burn(uint256)": {
+            "state_variables_read_in_BC": [
+                "destroyer",
+                "balances"
+            ],
+            "state_variables_written": [
+                "totalSupply",
+                "balances"
+            ]
+        },
+        "stateVariables": {
+            "owner": {
+                "name": "owner",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "name": {
+                "name": "name",
+                "type": "string",
+                "initial_value": "\"HoloToken\"",
+                "is_constant": "True"
+            },
+            "symbol": {
+                "name": "symbol",
+                "type": "string",
+                "initial_value": "\"HOT\"",
+                "is_constant": "True"
+            },
+            "decimals": {
+                "name": "decimals",
+                "type": "uint8",
+                "initial_value": "18",
+                "is_constant": "True"
+            },
+            "totalSupply": {
+                "name": "totalSupply",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "balances": {
+                "name": "balances",
+                "type": "mapping(address => uint256)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "allowed": {
+                "name": "allowed",
+                "type": "mapping(address => mapping(address => uint256))",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "mintingFinished": {
+                "name": "mintingFinished",
+                "type": "bool",
+                "initial_value": "false",
+                "is_constant": "False"
+            },
+            "destroyer": {
+                "name": "destroyer",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "minter": {
+                "name": "minter",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            }
+        }
+    },
+    "0x89f9749ce943281b8c65fec7f15e126f8cf4edb1.solDepositGame": {
+        "DepositGame.deposit()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [
+                "FirstTimeBonus",
+                "_balances",
+                "TotalAmount"
+            ]
+        },
+        "DepositGame.GetBonusWithdraw()": {
+            "state_variables_read_in_BC": [
+                "FirstTimeBonus",
+                "_balances"
+            ],
+            "state_variables_written": [
+                "FirstTimeBonus",
+                "_balances",
+                "TotalAmount"
+            ]
+        },
+        "DepositGame.withdraw()": {
+            "state_variables_read_in_BC": ["_balances","MaxNumber"],
+            "state_variables_written": [
+                "_balances",
+                "TotalAmount"
+            ]
+        },
+        "DepositGame.random()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "DepositGame.fallback()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [
+                "TotalAmount"
+            ]
+        },
+        "DepositGame.destroy()": {
+            "state_variables_read_in_BC": [
+                "admin",
+                "TotalAmount"
+            ],
+            "state_variables_written": [
+                "TotalAmount"
+            ]
+        },
+        "stateVariables": {
+            "_balances": {
+                "name": "_balances",
+                "type": "mapping(address => uint256)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "FirstTimeBonus": {
+                "name": "FirstTimeBonus",
+                "type": "mapping(address => bool)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "admin": {
+                "name": "admin",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "TotalAmount": {
+                "name": "TotalAmount",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "MaxNumber": {
+                "name": "MaxNumber",
+                "type": "uint256",
+                "initial_value": "20",
+                "is_constant": "True"
+            },
+            "randomTN": {
+                "name": "randomTN",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            }
+        }
+    },
+    "0x822d7b7f27713598e7e19410257e80517916032c.solStandardERC20Token": {
+
+        "StandardERC20Token.transfer(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "balances"
+            ],
+            "state_variables_written": [
+                "balances"
+            ]
+        },
+        "StandardERC20Token.transferFrom(address,address,uint256)": {
+            "state_variables_read_in_BC": [
+                "MAX_UINT256",
+                "balances",
+                "allowed"
+            ],
+            "state_variables_written": [
+                "allowed",
+                "balances"
+            ]
+        },
+        "StandardERC20Token.balanceOf(address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "StandardERC20Token.approve(address,uint256)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "StandardERC20Token.allowance(address,address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "stateVariables": {
+            "MAX_UINT256": {
+                "name": "MAX_UINT256",
+                "type": "uint256",
+                "initial_value": "2**256 - 1",
+                "is_constant": "True"
+            },
+            "balances": {
+                "name": "balances",
+                "type": "mapping(address => uint256)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "allowed": {
+                "name": "allowed",
+                "type": "mapping(address => mapping(address => uint256))",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "totalSupply": {
+                "name": "totalSupply",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "name": {
+                "name": "name",
+                "type": "string",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "decimals": {
+                "name": "decimals",
+                "type": "uint8",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "symbol": {
+                "name": "symbol",
+                "type": "string",
+                "initial_value": "",
+                "is_constant": "False"
+            }
+        }
+    },
+    "0x2600004fd1585f7270756ddc88ad9cfa10dd0428.solGemJoin5": {
+        "GemJoin5.rely(address)": {
+            "state_variables_read_in_BC": [
+                "wards"
+            ],
+            "state_variables_written": [
+                "wards"
+            ]
+        },
+        "GemJoin5.deny(address)": {
+            "state_variables_read_in_BC": [
+                "wards"
+            ],
+            "state_variables_written": [
+                "wards"
+            ]
+        },
+        "GemJoin5.cage()": {
+            "state_variables_read_in_BC": [
+                "wards"
+            ],
+            "state_variables_written": [
+                "live"
+            ]
+        },
+        "GemJoin5.join(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "gem",
+                "live",
+                "dec"
+            ],
+            "state_variables_written": []
+        },
+        "GemJoin5.exit(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "gem",
+                "dec"
+            ],
+            "state_variables_written": []
+        },
+        "stateVariables": {
+            "wards": {
+                "name": "wards",
+                "type": "mapping(address => uint256)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "vat": {
+                "name": "vat",
+                "type": "VatLike",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "ilk": {
+                "name": "ilk",
+                "type": "bytes32",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "gem": {
+                "name": "gem",
+                "type": "GemLike5",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "dec": {
+                "name": "dec",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "live": {
+                "name": "live",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            }
+        }
+    },
+    "0x38ca0421e2ba6ffc1920ec11d93c3da2b15e4131.solSirotTokenICO": {
+        "Ownable.transferOwnership(address)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": [
+                "owner"
+            ]
+        },
+        "SirotTokenICO.initialize()": {
+            "state_variables_read_in_BC": [
+                "initialTokens",
+                "initialized",
+                "owner",
+                "token"
+            ],
+            "state_variables_written": [
+                "initialized"
+            ]
+        },
+        "SirotTokenICO.isActive()": {
+            "state_variables_read_in_BC": [ ],
+            "state_variables_written": []
+
+        },
+        "SirotTokenICO.goalReached()": {
+            "state_variables_read_in_BC": [ ],
+            "state_variables_written": [],
+            "modifiers": []
+        },
+        "SirotTokenICO.fallback()": {
+            "state_variables_read_in_BC": [
+                "DAYS",
+                "START",
+                "CAP",
+                "initialized",
+                "raisedAmount"
+            ],
+            "state_variables_written": [
+                "raisedAmount"
+            ]
+        },
+        "SirotTokenICO.receive()": {
+            "state_variables_read_in_BC": [
+                "DAYS",
+                "START",
+                "CAP",
+                "initialized",
+                "raisedAmount"
+            ],
+            "state_variables_written": [
+                "raisedAmount"
+            ]
+        },
+        "SirotTokenICO.buyTokens()": {
+            "state_variables_read_in_BC": [
+                "DAYS",
+                "START",
+                "CAP",
+                "initialized",
+                "raisedAmount"
+            ],
+            "state_variables_written": [
+                "raisedAmount"
+            ]
+        },
+        "SirotTokenICO.tokensAvailable()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "SirotTokenICO.destroy()": {
+            "state_variables_read_in_BC": [
+                "owner",
+                "token"
+            ],
+            "state_variables_written": []
+        },
+        "stateVariables": {
+            "owner": {
+                "name": "owner",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "ownerpayable": {
+                "name": "ownerpayable",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "token": {
+                "name": "token",
+                "type": "Token",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "Info": {
+                "name": "Info",
+                "type": "string",
+                "initial_value": "\"Do not call buyTokens directly. Use sale.sirottoken.com\"",
+                "is_constant": "True"
+            },
+            "RATE": {
+                "name": "RATE",
+                "type": "uint256",
+                "initial_value": "125000",
+                "is_constant": "True"
+            },
+            "CAP": {
+                "name": "CAP",
+                "type": "uint256",
+                "initial_value": "500",
+                "is_constant": "True"
+            },
+            "START": {
+                "name": "START",
+                "type": "uint256",
+                "initial_value": "1593705081",
+                "is_constant": "True"
+            },
+            "DAYS": {
+                "name": "DAYS",
+                "type": "uint256",
+                "initial_value": "92",
+                "is_constant": "True"
+            },
+            "initialTokens": {
+                "name": "initialTokens",
+                "type": "uint256",
+                "initial_value": "50000000 * 10**18",
+                "is_constant": "True"
+            },
+            "initialized": {
+                "name": "initialized",
+                "type": "bool",
+                "initial_value": "false",
+                "is_constant": "False"
+            },
+            "raisedAmount": {
+                "name": "raisedAmount",
+                "type": "uint256",
+                "initial_value": "0",
+                "is_constant": "False"
+            }
+        }
+    },
+    "0x4c969A8Fe3e79Ce8AEB9f40E4406385A36c11112.solsimpleToken": {
+        "simpleToken.totalSupply()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "simpleToken.balanceOf(address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "simpleToken.allowance(address,address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "simpleToken.transfer(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "balances"
+            ],
+            "state_variables_written": [
+                "balances"
+            ]
+        },
+        "simpleToken.approve(address,uint256)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "simpleToken.transferFrom(address,address,uint256)": {
+            "state_variables_read_in_BC": [
+                "balances",
+                "allowed"
+            ],
+            "state_variables_written": [
+                "balances",
+                "allowed"
+            ]
+        },
+        "simpleToken.increaseApproval(address,uint256)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "simpleToken.decreaseApproval(address,uint256)": {
+            "state_variables_read_in_BC": ["allowed"],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "stateVariables": {
+            "totalSupply_": {
+                "name": "totalSupply_",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "name": {
+                "name": "name",
+                "type": "string",
+                "initial_value": "\"Universe\"",
+                "is_constant": "True"
+            },
+            "symbol": {
+                "name": "symbol",
+                "type": "string",
+                "initial_value": "\"UNI\"",
+                "is_constant": "True"
+            },
+            "decimals": {
+                "name": "decimals",
+                "type": "uint8",
+                "initial_value": "18",
+                "is_constant": "True"
+            },
+            "initialSupply": {
+                "name": "initialSupply",
+                "type": "uint256",
+                "initial_value": "100000000*(10**uint256(decimals))",
+                "is_constant": "True"
+            },
+            "balances": {
+                "name": "balances",
+                "type": "mapping(address => uint256)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "allowed": {
+                "name": "allowed",
+                "type": "mapping(address => mapping(address => uint256))",
+                "initial_value": "{}",
+                "is_constant": "False"
+            }
+        }
+    },
+    "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.solPiggericksShop": {
+        "PiggericksShop.toggleContract(bool)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": [
+                "isActive"
+            ]
+        },
+        "PiggericksShop.updateAragon(address)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": [
+                "aragon"
+            ]
+        },
+        "PiggericksShop.updateOwner(address)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": [
+                "owner"
+            ]
+        },
+        "PiggericksShop.moveFund(uint256)": {
+            "state_variables_read_in_BC": [
+                "daitoken",
+                "owner"
+            ],
+            "state_variables_written": []
+        },
+        "PiggericksShop.receiveDai(bytes32,bytes32,uint256)": {
+            "state_variables_read_in_BC": [
+                "isActive"
+            ],
+            "state_variables_written": []
+        },
+        "PiggericksShop.receive(bytes32,bytes32)": {
+            "state_variables_read_in_BC": [
+                "isActive"
+            ],
+            "state_variables_written": []
+        },
+        "PiggericksShop.refund(uint256,address)": {
+            "state_variables_read_in_BC": [
+                "owner"
+            ],
+            "state_variables_written": []
+
+        },
+        "PiggericksShop.viewOwner()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "PiggericksShop.viewAragon()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "PiggericksShop.viewIsOpen()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [],
+            "modifiers": []
+        },
+        "stateVariables": {
+            "daitoken": {
+                "name": "daitoken",
+                "type": "DaiToken",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "owner": {
+                "name": "owner",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "aragon": {
+                "name": "aragon",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "isActive": {
+                "name": "isActive",
+                "type": "bool",
+                "initial_value": "false",
+                "is_constant": "False"
+            }
+        }
+    },
+    "0xdb6bcae929767e657884b03974c849d46352cde4.solERC20Latte": {
+
+        "ERC20Latte.transfer(address,uint256)": {
+            "state_variables_read_in_BC": [
+                "balances"
+            ],
+            "state_variables_written": [
+                "balances"
+            ]
+        },
+        "ERC20Latte.transferFrom(address,address,uint256)": {
+            "state_variables_read_in_BC": [
+                "balances",
+                "MAX_UINT256",
+                "allowed"
+            ],
+            "state_variables_written": [
+                "balances",
+                "allowed"
+            ]
+        },
+        "ERC20Latte.balanceOf(address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+            },
+        "ERC20Latte.approve(address,uint256)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [
+                "allowed"
+            ]
+        },
+        "ERC20Latte.allowance(address,address)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "stateVariables": {
+            "totalSupply": {
+                "name": "totalSupply",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "MAX_UINT256": {
+                "name": "MAX_UINT256",
+                "type": "uint256",
+                "initial_value": "2**256 - 1",
+                "is_constant": "True"
+            },
+            "balances": {
+                "name": "balances",
+                "type": "mapping(address => uint256)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "allowed": {
+                "name": "allowed",
+                "type": "mapping(address => mapping(address => uint256))",
+                "initial_value": "{}",
+                "is_constant": "False"
+            },
+            "name": {
+                "name": "name",
+                "type": "string",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "decimals": {
+                "name": "decimals",
+                "type": "uint8",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "symbol": {
+                "name": "symbol",
+                "type": "string",
+                "initial_value": "",
+                "is_constant": "False"
+            }
+        }
+    },
+    "0x95a6a3f44a70172e7d50a9e28c85dfd712756b8c.solSynthSummaryUtil": {
+        "SynthSummaryUtil.totalSynthsInKey(address,bytes32)": {
+            "state_variables_read_in_BC": ["synthetix"],
+            "state_variables_written": []
+        },
+        "SynthSummaryUtil.synthsBalances(address)": {
+            "state_variables_read_in_BC": ["synthetix"],
+            "state_variables_written": []
+        },
+        "SynthSummaryUtil.frozenSynths()": {
+            "state_variables_read_in_BC": [
+                "exchangeRates",
+                "synthetix"
+            ],
+            "state_variables_written": []
+        },
+        "SynthSummaryUtil.synthsRates()": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": []
+        },
+        "stateVariables": {
+            "synthetix": {
+                "name": "synthetix",
+                "type": "ISynthetix",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "exchangeRates": {
+                "name": "exchangeRates",
+                "type": "IExchangeRates",
+                "initial_value": "",
+                "is_constant": "False"
+            }
+        }
+    },
+    "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.soldigitalNotary": {
+        "managed.setManager(address)": {
+            "state_variables_read_in_BC": [
+                "manager"
+            ],
+            "state_variables_written": [
+                "manager"
+            ]
+        },
+        "digitalNotary.setContractSwitch()": {
+            "state_variables_read_in_BC": [
+                "manager",
+                "contractactive"
+            ],
+            "state_variables_written": [
+                "contractactive"
+            ]
+        },
+        "digitalNotary.setRegistrationFee(uint256)": {
+            "state_variables_read_in_BC": [
+                "manager"
+            ],
+            "state_variables_written": [
+                "registrationfee"
+            ]
+        },
+        "digitalNotary.setChangeOwnerFee(uint256)": {
+            "state_variables_read_in_BC": [
+                "manager"
+            ],
+            "state_variables_written": [
+                "changeownerfee"
+            ]
+        },
+        "digitalNotary.getFileHashExists(bytes32)": {
+            "state_variables_read_in_BC": [],
+            "state_variables_written": [],
+            "modifiers": []
+        },
+        "digitalNotary.getFileHashCurrentOwner(bytes32)": {
+            "state_variables_read_in_BC": [
+                "FileHashCurrentOwnerMap"
+            ],
+            "state_variables_written": []
+        },
+        "digitalNotary.RegisterFileHash(bytes32)": {
+            "state_variables_read_in_BC": [
+                "FileHashCurrentOwnerMap",
+                "contractactive",
+                "registrationfee"
+            ],
+            "state_variables_written": [
+                "FileHashCurrentOwnerMap"
+            ]
+        },
+        "digitalNotary.transferOwnership(bytes32,address)": {
+            "state_variables_read_in_BC": [
+                "FileHashCurrentOwnerMap",
+                "contractactive",
+                "changeownerfee"
+            ],
+            "state_variables_written": [
+                "FileHashCurrentOwnerMap"
+            ]
+        },
+        "stateVariables": {
+            "manager": {
+                "name": "manager",
+                "type": "address",
+                "initial_value": "",
+                "is_constant": "False"
+            },
+            "contractactive": {
+                "name": "contractactive",
+                "type": "bool",
+                "initial_value": "false",
+                "is_constant": "False"
+            },
+            "registrationfee": {
+                "name": "registrationfee",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "changeownerfee": {
+                "name": "changeownerfee",
+                "type": "uint256",
+                "initial_value": 0,
+                "is_constant": "False"
+            },
+            "FileHashCurrentOwnerMap": {
+                "name": "FileHashCurrentOwnerMap",
+                "type": "mapping(bytes32 => address)",
+                "initial_value": "{}",
+                "is_constant": "False"
+            }
+        }
+    }
+}

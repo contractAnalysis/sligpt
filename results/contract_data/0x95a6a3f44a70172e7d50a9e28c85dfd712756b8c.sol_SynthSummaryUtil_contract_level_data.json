@@ -1,0 +1,54 @@
+{
+    "ISynth": {
+        "name": "ISynth",
+        "abstract": false,
+        "fullyImplemented": false,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "admin"
+        ],
+        "code": "contract ISynth {\n    bytes32 public currencyKey;\n    function balanceOf(address owner) external view returns (uint);\n}"
+    },
+    "ISynthetix": {
+        "name": "ISynthetix",
+        "abstract": false,
+        "fullyImplemented": false,
+        "baseContracts": [],
+        "dependencies": [
+            "ISynth"
+        ],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "to"
+        ],
+        "code": "contract ISynthetix {\n    ISynth[] public availableSynths;\n    function availableSynthCount() public view returns (uint);\n    function availableCurrencyKeys()\n        public\n        view\n        returns (bytes32[]);\n}"
+    },
+    "IExchangeRates": {
+        "name": "IExchangeRates",
+        "abstract": false,
+        "fullyImplemented": false,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "transferOwnership"
+        ],
+        "code": "contract IExchangeRates {\n    function rateIsFrozen(bytes32 currencyKey) external view returns (bool);\n    function ratesForCurrencies(bytes32[] currencyKeys) external view returns (uint[] memory);\n    function effectiveValue(bytes32 sourceCurrencyKey, uint sourceAmount, bytes32 destinationCurrencyKey)\n    public\n    view\n    returns (uint);\n}"
+    },
+    "SynthSummaryUtil": {
+        "name": "SynthSummaryUtil",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [
+            "IExchangeRates",
+            "ISynth",
+            "ISynthetix"
+        ],
+        "libraries": {},
+        "linearizedBaseContracts": [],
+        "code": "contract SynthSummaryUtil {\n    ISynthetix public synthetix;\n    IExchangeRates public exchangeRates;\n    constructor(address _synthetix, address _exchangeRates) public {\n        synthetix = ISynthetix(_synthetix);    \n        exchangeRates = IExchangeRates(_exchangeRates);\n    }\n    function totalSynthsInKey(address account, bytes32 currencyKey) external view returns (uint total) {\n        uint numSynths = synthetix.availableSynthCount();\n        for (uint i = 0; i < numSynths; i++) {\n            ISynth synth = synthetix.availableSynths(i);\n            total += exchangeRates.effectiveValue(synth.currencyKey(), synth.balanceOf(account), currencyKey);\n        }\n        return total;\n    }\n    function synthsBalances(address account) external view returns (bytes32[], uint[],  uint[]) {\n        uint numSynths = synthetix.availableSynthCount();\n        bytes32[] memory currencyKeys = new bytes32[](numSynths);\n        uint[] memory balances = new uint[](numSynths);\n        uint[] memory sUSDBalances = new uint[](numSynths);\n        for (uint i = 0; i < numSynths; i++) {\n            ISynth synth = synthetix.availableSynths(i);\n            currencyKeys[i] = synth.currencyKey();\n            balances[i] = synth.balanceOf(account);\n            sUSDBalances[i] = exchangeRates.effectiveValue(synth.currencyKey(), synth.balanceOf(account), 'sUSD');\n        }\n        return (currencyKeys, balances, sUSDBalances);\n    }\n    function frozenSynths() external view returns (bytes32[]) {\n        uint numSynths = synthetix.availableSynthCount();\n        bytes32[] memory frozenSynthsKeys = new bytes32[](numSynths);\n        for (uint i = 0; i < numSynths; i++) {\n            ISynth synth = synthetix.availableSynths(i);\n            if (exchangeRates.rateIsFrozen(synth.currencyKey())) {\n                frozenSynthsKeys[i] = synth.currencyKey();\n            }\n        }\n        return frozenSynthsKeys;\n    }\n    function synthsRates() external view returns (bytes32[], uint[]) {\n        bytes32[] memory currencyKeys = synthetix.availableCurrencyKeys();\n        return (currencyKeys, exchangeRates.ratesForCurrencies(currencyKeys));\n    }\n}"
+    }
+}

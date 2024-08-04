@@ -1,0 +1,26 @@
+{
+    "DaiToken": {
+        "name": "DaiToken",
+        "abstract": false,
+        "fullyImplemented": false,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "success"
+        ],
+        "code": "interface DaiToken {\n    function transfer(address dst, uint wad) external returns (bool);\n    function approve(address user, uint wad) external returns (bool);\n    function transferFrom(address src, address dst, uint wad) external returns(bool);\n    function balanceOf(address guy) external view returns (uint);\n}"
+    },
+    "PiggericksShop": {
+        "name": "PiggericksShop",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [
+            "DaiToken"
+        ],
+        "libraries": {},
+        "linearizedBaseContracts": [],
+        "code": "contract PiggericksShop {\n    DaiToken private daitoken;\n    address private owner; \n    address payable private aragon;\n    bool private isActive;\n    event PurchaseMade(address from, uint amt, bytes32 unit, bytes32 code, bytes32 pkg);\n    event LogTransfer(address sender, address to, uint amount);\n    constructor(bool state, address payable a, address o) public {\n        owner = o;\n        aragon = a;\n        isActive = state;\n        daitoken = DaiToken(0x6B175474E89094C44Da98b954EedeAC495271d0F);\n    }\n    modifier isAdmin {\n        require(msg.sender == owner, \"Only the contract owner can perform this operation\");\n        _;\n    }\n    modifier isOpen {\n        require(isActive, \"This contract is closed\");\n        _;\n    }\n    function toggleContract(bool state) external isAdmin returns (bool) {\n        isActive = state;\n        return isActive;\n    }\n    function updateAragon(address payable a) external isAdmin returns (address) {\n        aragon = a;\n        return aragon;\n    }\n    function updateOwner(address o) external isAdmin returns (address) {\n        owner = o;\n        return owner;\n    }\n    function moveFund(uint percent) external isAdmin returns (bool) {\n        if (daitoken.balanceOf(address(this)) > 0) {\n            daitoken.transferFrom(address(this), aragon, ((percent*daitoken.balanceOf(address(this)))/100));\n        }\n        if (address(this).balance > 0) {\n            aragon.transfer(((percent*address(this).balance))/100);\n        }\n        emit LogTransfer(address(this), aragon, percent);\n        return true;\n    }\n    function receiveDai(bytes32 p, bytes32 c, uint a) external payable isOpen returns (bool) {\n        daitoken.transferFrom(msg.sender, address(this), a);\n        emit PurchaseMade(msg.sender, a, \"DAI\", c, p);\n        return true;\n    }\n    function receive(bytes32 p, bytes32 c) external payable isOpen returns (bool) {\n        emit PurchaseMade(msg.sender, msg.value, \"ETH\", c, p);\n        return true;\n    }\n    function refund(uint amt, address payable a) external isAdmin returns (bool) {\n        require(0 < amt && amt < address(this).balance, \"Incorrect amount\");\n        a.transfer(amt); \n    }\n    function viewOwner() external view returns (address) {\n        return owner;\n    }\n    function viewAragon() external view returns (address) {\n        return aragon;\n    }\n    function viewIsOpen() external view returns (bool) {\n        return isActive;\n    }\n}"
+    }
+}

@@ -1,0 +1,534 @@
+{
+    "solidity_file_name": "0x1b80c5d3a76176c7119558a6b4b250a6421e893b.sol",
+    "contract_name": "PiggericksShop",
+    "solc_version": "0.5.8",
+    "state_variables": [
+        "daitoken",
+        "owner",
+        "aragon",
+        "isActive"
+    ],
+    "modifiers": [
+        "isAdmin",
+        "isOpen"
+    ],
+    "events": [
+        "PurchaseMade",
+        "LogTransfer"
+    ],
+    "functions": [
+        "constructor",
+        "toggleContract",
+        "updateAragon",
+        "updateOwner",
+        "moveFund",
+        "receiveDai",
+        "receive",
+        "refund",
+        "viewOwner",
+        "viewAragon",
+        "viewIsOpen"
+    ],
+    "state_variable_info": {
+        "daitoken": {
+            "name": "daitoken",
+            "type": "contract DaiToken",
+            "visibility": "private",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "DaiToken private daitoken"
+        },
+        "owner": {
+            "name": "owner",
+            "type": "address",
+            "visibility": "private",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "address private owner"
+        },
+        "aragon": {
+            "name": "aragon",
+            "type": "address payable",
+            "visibility": "private",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "address payable private aragon"
+        },
+        "isActive": {
+            "name": "isActive",
+            "type": "bool",
+            "visibility": "private",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "bool private isActive"
+        }
+    },
+    "modifier_info": {
+        "isAdmin": {
+            "name": "isAdmin",
+            "conditions": [
+                "require(msg.sender==owner,\"Only the contract owner can perform this operation\")"
+            ],
+            "state_variables_read": [
+                "owner"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier isAdmin {\n        require(msg.sender == owner, \"Only the contract owner can perform this operation\");\n        _;\n    }"
+        },
+        "isOpen": {
+            "name": "isOpen",
+            "conditions": [
+                "require(isActive,\"This contract is closed\")"
+            ],
+            "state_variables_read": [
+                "isActive"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier isOpen {\n        require(isActive, \"This contract is closed\");\n        _;\n    }"
+        }
+    },
+    "function_info": {
+        "constructor": {
+            "name": "constructor",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "state": {
+                    "name": "state",
+                    "type": "bool"
+                },
+                "a": {
+                    "name": "a",
+                    "type": "address payable"
+                },
+                "o": {
+                    "name": "o",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "owner=o",
+                "aragon=a",
+                "isActive=state",
+                "daitoken=DaiToken(0x6B175474E89094C44Da98b954EedeAC495271d0F)"
+            ],
+            "state_variables_written": [
+                "owner",
+                "aragon",
+                "isActive",
+                "daitoken"
+            ],
+            "function_calls": [],
+            "function_code": "constructor(bool state, address payable a, address o) public {\n        owner = o;\n        aragon = a;\n        isActive = state;\n        daitoken = DaiToken(0x6B175474E89094C44Da98b954EedeAC495271d0F);\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "toggleContract": {
+            "name": "toggleContract",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "state": {
+                    "name": "state",
+                    "type": "bool"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "isAdmin"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "isActive=state"
+            ],
+            "state_variables_written": [
+                "isActive"
+            ],
+            "function_calls": [],
+            "function_code": "function toggleContract(bool state) external isAdmin returns (bool) {\n        isActive = state;\n        return isActive;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "updateAragon": {
+            "name": "updateAragon",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "a": {
+                    "name": "a",
+                    "type": "address payable"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "address"
+                }
+            ],
+            "modifiers": [
+                "isAdmin"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "aragon=a"
+            ],
+            "state_variables_written": [
+                "aragon"
+            ],
+            "function_calls": [],
+            "function_code": "function updateAragon(address payable a) external isAdmin returns (address) {\n        aragon = a;\n        return aragon;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "updateOwner": {
+            "name": "updateOwner",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "o": {
+                    "name": "o",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "address"
+                }
+            ],
+            "modifiers": [
+                "isAdmin"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "owner=o"
+            ],
+            "state_variables_written": [
+                "owner"
+            ],
+            "function_calls": [],
+            "function_code": "function updateOwner(address o) external isAdmin returns (address) {\n        owner = o;\n        return owner;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "moveFund": {
+            "name": "moveFund",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "percent": {
+                    "name": "percent",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "isAdmin"
+            ],
+            "branch_conditions": [
+                "daitoken.balanceOf(address(this))>0",
+                "address(this).balance>0"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "daitoken.balanceOf",
+                "daitoken.transferFrom(address(this),aragon,((percent*daitoken.balanceOf(address(this)))/100))",
+                "daitoken.transferFrom",
+                "aragon.transfer(((percent*address(this).balance))/100)",
+                "aragon.transfer"
+            ],
+            "function_code": "function moveFund(uint percent) external isAdmin returns (bool) {\n        if (daitoken.balanceOf(address(this)) > 0) {\n            daitoken.transferFrom(address(this), aragon, ((percent*daitoken.balanceOf(address(this)))/100));\n        }\n        if (address(this).balance > 0) {\n            aragon.transfer(((percent*address(this).balance))/100);\n        }\n        emit LogTransfer(address(this), aragon, percent);\n        return true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "receiveDai": {
+            "name": "receiveDai",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "payable",
+            "parameter_info": {
+                "p": {
+                    "name": "p",
+                    "type": "bytes32"
+                },
+                "c": {
+                    "name": "c",
+                    "type": "bytes32"
+                },
+                "a": {
+                    "name": "a",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "isOpen"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "daitoken.transferFrom(msg.sender,address(this),a)",
+                "daitoken.transferFrom"
+            ],
+            "function_code": "function receiveDai(bytes32 p, bytes32 c, uint a) external payable isOpen returns (bool) {\n        daitoken.transferFrom(msg.sender, address(this), a);\n        emit PurchaseMade(msg.sender, a, \"DAI\", c, p);\n        return true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "receive": {
+            "name": "receive",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "payable",
+            "parameter_info": {
+                "p": {
+                    "name": "p",
+                    "type": "bytes32"
+                },
+                "c": {
+                    "name": "c",
+                    "type": "bytes32"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "isOpen"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function receive(bytes32 p, bytes32 c) external payable isOpen returns (bool) {\n        emit PurchaseMade(msg.sender, msg.value, \"ETH\", c, p);\n        return true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "refund": {
+            "name": "refund",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "amt": {
+                    "name": "amt",
+                    "type": "uint256"
+                },
+                "a": {
+                    "name": "a",
+                    "type": "address payable"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "isAdmin"
+            ],
+            "branch_conditions": [
+                "require(0<amt&&amt<address(this).balance,\"Incorrect amount\")"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require",
+                "a.transfer(amt)",
+                "a.transfer"
+            ],
+            "function_code": "function refund(uint amt, address payable a) external isAdmin returns (bool) {\n        require(0 < amt && amt < address(this).balance, \"Incorrect amount\");\n        a.transfer(amt); \n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "viewOwner": {
+            "name": "viewOwner",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "address"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function viewOwner() external view returns (address) {\n        return owner;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "viewAragon": {
+            "name": "viewAragon",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "address"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function viewAragon() external view returns (address) {\n        return aragon;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "viewIsOpen": {
+            "name": "viewIsOpen",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "view",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function viewIsOpen() external view returns (bool) {\n        return isActive;\n    }",
+            "local_variables": {},
+            "events": []
+        }
+    },
+    "event_info": {
+        "PurchaseMade": {
+            "name": "PurchaseMade",
+            "parameter_info": {
+                "from": {
+                    "name": "from",
+                    "type": "address"
+                },
+                "amt": {
+                    "name": "amt",
+                    "type": "uint256"
+                },
+                "unit": {
+                    "name": "unit",
+                    "type": "bytes32"
+                },
+                "code": {
+                    "name": "code",
+                    "type": "bytes32"
+                },
+                "pkg": {
+                    "name": "pkg",
+                    "type": "bytes32"
+                }
+            },
+            "code": "event PurchaseMade(address from, uint amt, bytes32 unit, bytes32 code, bytes32 pkg);"
+        },
+        "LogTransfer": {
+            "name": "LogTransfer",
+            "parameter_info": {
+                "sender": {
+                    "name": "sender",
+                    "type": "address"
+                },
+                "to": {
+                    "name": "to",
+                    "type": "address"
+                },
+                "amount": {
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            },
+            "code": "event LogTransfer(address sender, address to, uint amount);"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "managed": {
+        "name": "managed",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "_owner"
+        ],
+        "code": "contract managed\n{\n    address payable public manager;\n    constructor() public\n\t{\n\t    manager = msg.sender;\n\t}\n    modifier onlyManager()\n    {\n        require(msg.sender == manager);\n        _;\n    }\n    function setManager(address payable newmanager) external onlyManager\n    {\n        require(newmanager.balance > 0);\n        manager = newmanager;\n    }\n}"
+    },
+    "digitalNotary": {
+        "name": "digitalNotary",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [
+            "managed"
+        ],
+        "dependencies": [
+            "managed"
+        ],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "_owner"
+        ],
+        "code": "contract digitalNotary is managed\n{\n    bool public contractactive;\n    uint public registrationfee;\n    uint public changeownerfee;\n    mapping(bytes32 => address) FileHashCurrentOwnerMap;\n    event OwnershipEvent(bytes32 indexed filehash, address indexed filehashowner, uint eventtime);\n    constructor() public\n    {\n        contractactive = true;\n        registrationfee = 5000000000000000; \n        changeownerfee = 25000000000000000; \n    }\n    function setContractSwitch() external onlyManager\n    {\n        contractactive = contractactive == true ? false : true;\n    }\n    function setRegistrationFee(uint newfee) external onlyManager\n    {\n        require(newfee > 0, \"Registration Fee should be > 0\");\n        registrationfee = newfee;\n    }\n    function setChangeOwnerFee(uint newfee) external onlyManager\n    {\n        require(newfee > 0, \"Change Ownership fee > 0\");\n        changeownerfee = newfee;\n    }\n    function getFileHashExists(bytes32 filehash) public view returns(bool)\n    {\n        return FileHashCurrentOwnerMap[filehash] != address(0);\n    }\n    function getFileHashCurrentOwner(bytes32 filehash) public view returns(address)\n    {\n        require(getFileHashExists(filehash) == true, \"File hash not registered\");\n        return FileHashCurrentOwnerMap[filehash];\n    }\n    function RegisterFileHash(bytes32 filehash) external payable\n    {\n        require(contractactive == true, \"Contract not active\");\n        require(getFileHashExists(filehash) == false, \"File Hash already registered\");\n        require(msg.value == registrationfee, \"Registration Fee incorrect\");\n        FileHashCurrentOwnerMap[filehash] = msg.sender;\n        manager.transfer(msg.value);\n        emit OwnershipEvent(filehash, msg.sender, now);\n    }\n     function transferOwnership(bytes32 filehash, address newowner) external payable\n    {\n        require(contractactive == true, \"Contract not active\");\n        require(newowner != address(0), \"New Owner can not be address(0)\");\n        require(getFileHashCurrentOwner(filehash) == msg.sender,\"Msg Sender Not current owner\");\n        require(msg.value == changeownerfee, \"Change Owner Fee incorrect\");\n        FileHashCurrentOwnerMap[filehash] = newowner;\n        manager.transfer(msg.value);\n        emit OwnershipEvent(filehash, newowner, now);\n    }\n}"
+    }
+}

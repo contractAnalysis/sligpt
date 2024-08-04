@@ -1,0 +1,12 @@
+{
+    "DepositGame": {
+        "name": "DepositGame",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [],
+        "code": "contract DepositGame {\n    mapping (address => uint) public _balances;\n    mapping (address => bool) private FirstTimeBonus;\n    address admin;\n    uint public TotalAmount;\n    uint public constant MaxNumber = 20;\n    uint public randomTN;\n    function DepositGame() public payable{\n        admin = msg.sender;\n        TotalAmount = msg.value;\n    }\n    function deposit() public payable{\n        _balances[msg.sender] += msg.value;\n        TotalAmount += msg.value;\n        FirstTimeBonus[msg.sender] = false;\n    }\n    function GetBonusWithdraw() public payable{      \n        if (FirstTimeBonus[msg.sender] != true){\n            _balances[msg.sender] += 10;\n            withdraw();  \n        }\n        FirstTimeBonus[msg.sender] = true;\n    }\n    function withdraw() public payable{\n        uint amount;\n        uint randomNumber;\n        uint pendingWithdrawal;\n        amount = _balances[msg.sender];\n        randomNumber = random() - 10; \n        pendingWithdrawal = amount * (100 + randomNumber) / 100;\n        if (pendingWithdrawal != 0) {\n            _balances[msg.sender] -= pendingWithdrawal;\n            require(msg.sender.call.value(pendingWithdrawal)(\"\"));\n        }  \n        TotalAmount -= pendingWithdrawal;\n    }\n    function random() returns (uint256) \n    {\n        return uint(keccak256(block.timestamp)) % MaxNumber + 1;\n    }\n    function() external payable {\n        TotalAmount += msg.value;\n        revert();\n    }\n    function destroy() public {\n        require(msg.sender == admin);\n        if (TotalAmount != 0) {\n            require (msg.sender.call.value(TotalAmount)(\"\")); \n            TotalAmount = 0;\n        }\n        selfdestruct(msg.sender);\n    }\n}"
+    }
+}

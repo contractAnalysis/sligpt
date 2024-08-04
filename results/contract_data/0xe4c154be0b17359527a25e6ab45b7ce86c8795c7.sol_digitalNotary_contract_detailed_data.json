@@ -1,0 +1,358 @@
+{
+    "solidity_file_name": "0xe4c154be0b17359527a25e6ab45b7ce86c8795c7.sol",
+    "contract_name": "digitalNotary",
+    "solc_version": "0.6.4",
+    "state_variables": [
+        "contractactive",
+        "registrationfee",
+        "changeownerfee",
+        "FileHashCurrentOwnerMap"
+    ],
+    "modifiers": [],
+    "events": [
+        "OwnershipEvent"
+    ],
+    "functions": [
+        "constructor",
+        "setContractSwitch",
+        "setRegistrationFee",
+        "setChangeOwnerFee",
+        "getFileHashExists",
+        "getFileHashCurrentOwner",
+        "RegisterFileHash",
+        "transferOwnership"
+    ],
+    "state_variable_info": {
+        "contractactive": {
+            "name": "contractactive",
+            "type": "bool",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "bool public contractactive"
+        },
+        "registrationfee": {
+            "name": "registrationfee",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint public registrationfee"
+        },
+        "changeownerfee": {
+            "name": "changeownerfee",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint public changeownerfee"
+        },
+        "FileHashCurrentOwnerMap": {
+            "name": "FileHashCurrentOwnerMap",
+            "type": "mapping(bytes32 => address)",
+            "visibility": "internal",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping(bytes32 => address) FileHashCurrentOwnerMap"
+        }
+    },
+    "modifier_info": {},
+    "function_info": {
+        "constructor": {
+            "name": "constructor",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "contractactive=true",
+                "registrationfee=5000000000000000",
+                "changeownerfee=25000000000000000"
+            ],
+            "state_variables_written": [
+                "contractactive",
+                "registrationfee",
+                "changeownerfee"
+            ],
+            "function_calls": [],
+            "function_code": "constructor() public\n    {\n        contractactive = true;\n        registrationfee = 5000000000000000; \n        changeownerfee = 25000000000000000; \n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "setContractSwitch": {
+            "name": "setContractSwitch",
+            "selector": "38bce208",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [
+                "onlyManager"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "contractactive=conditional_expression:contractactive==true?:"
+            ],
+            "state_variables_written": [
+                "contractactive"
+            ],
+            "function_calls": [],
+            "function_code": "function setContractSwitch() external onlyManager\n    {\n        contractactive = contractactive == true ? false : true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "setRegistrationFee": {
+            "name": "setRegistrationFee",
+            "selector": "c320c727",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "newfee": {
+                    "name": "newfee",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "onlyManager"
+            ],
+            "branch_conditions": [
+                "require(newfee>0,\"Registration Fee should be > 0\")"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "registrationfee=newfee"
+            ],
+            "state_variables_written": [
+                "registrationfee"
+            ],
+            "function_calls": [
+                "require"
+            ],
+            "function_code": "function setRegistrationFee(uint newfee) external onlyManager\n    {\n        require(newfee > 0, \"Registration Fee should be > 0\");\n        registrationfee = newfee;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "setChangeOwnerFee": {
+            "name": "setChangeOwnerFee",
+            "selector": "2b373ee5",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "newfee": {
+                    "name": "newfee",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "onlyManager"
+            ],
+            "branch_conditions": [
+                "require(newfee>0,\"Change Ownership fee > 0\")"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "changeownerfee=newfee"
+            ],
+            "state_variables_written": [
+                "changeownerfee"
+            ],
+            "function_calls": [
+                "require"
+            ],
+            "function_code": "function setChangeOwnerFee(uint newfee) external onlyManager\n    {\n        require(newfee > 0, \"Change Ownership fee > 0\");\n        changeownerfee = newfee;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "getFileHashExists": {
+            "name": "getFileHashExists",
+            "selector": "f3388458",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "filehash": {
+                    "name": "filehash",
+                    "type": "bytes32"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function getFileHashExists(bytes32 filehash) public view returns(bool)\n    {\n        return FileHashCurrentOwnerMap[filehash] != address(0);\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "getFileHashCurrentOwner": {
+            "name": "getFileHashCurrentOwner",
+            "selector": "af372212",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "filehash": {
+                    "name": "filehash",
+                    "type": "bytes32"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "address"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(getFileHashExists(filehash)==true,\"File hash not registered\")"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require",
+                "getFileHashExists"
+            ],
+            "function_code": "function getFileHashCurrentOwner(bytes32 filehash) public view returns(address)\n    {\n        require(getFileHashExists(filehash) == true, \"File hash not registered\");\n        return FileHashCurrentOwnerMap[filehash];\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "RegisterFileHash": {
+            "name": "RegisterFileHash",
+            "selector": "a32ee421",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "payable",
+            "parameter_info": {
+                "filehash": {
+                    "name": "filehash",
+                    "type": "bytes32"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(contractactive==true,\"Contract not active\")",
+                "require(getFileHashExists(filehash)==false,\"File Hash already registered\")",
+                "require(msg.value==registrationfee,\"Registration Fee incorrect\")"
+            ],
+            "state_variables_read_in_BC": [
+                "contractactive",
+                "registrationfee"
+            ],
+            "code_statement_write_state_variables": [
+                "FileHashCurrentOwnerMap[filehash]=msg.sender"
+            ],
+            "state_variables_written": [
+                "FileHashCurrentOwnerMap"
+            ],
+            "function_calls": [
+                "require",
+                "getFileHashExists",
+                "manager.transfer(msg.value)",
+                "manager.transfer"
+            ],
+            "function_code": "function RegisterFileHash(bytes32 filehash) external payable\n    {\n        require(contractactive == true, \"Contract not active\");\n        require(getFileHashExists(filehash) == false, \"File Hash already registered\");\n        require(msg.value == registrationfee, \"Registration Fee incorrect\");\n        FileHashCurrentOwnerMap[filehash] = msg.sender;\n        manager.transfer(msg.value);\n        emit OwnershipEvent(filehash, msg.sender, now);\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "transferOwnership": {
+            "name": "transferOwnership",
+            "selector": "ef5d6bbb",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "payable",
+            "parameter_info": {
+                "filehash": {
+                    "name": "filehash",
+                    "type": "bytes32"
+                },
+                "newowner": {
+                    "name": "newowner",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(contractactive==true,\"Contract not active\")",
+                "require(newowner!=address(0),\"New Owner can not be address(0)\")",
+                "require(getFileHashCurrentOwner(filehash)==msg.sender,\"Msg Sender Not current owner\")",
+                "require(msg.value==changeownerfee,\"Change Owner Fee incorrect\")"
+            ],
+            "state_variables_read_in_BC": [
+                "contractactive",
+                "changeownerfee"
+            ],
+            "code_statement_write_state_variables": [
+                "FileHashCurrentOwnerMap[filehash]=newowner"
+            ],
+            "state_variables_written": [
+                "FileHashCurrentOwnerMap"
+            ],
+            "function_calls": [
+                "require",
+                "getFileHashCurrentOwner",
+                "manager.transfer(msg.value)",
+                "manager.transfer"
+            ],
+            "function_code": "function transferOwnership(bytes32 filehash, address newowner) external payable\n    {\n        require(contractactive == true, \"Contract not active\");\n        require(newowner != address(0), \"New Owner can not be address(0)\");\n        require(getFileHashCurrentOwner(filehash) == msg.sender,\"Msg Sender Not current owner\");\n        require(msg.value == changeownerfee, \"Change Owner Fee incorrect\");\n        FileHashCurrentOwnerMap[filehash] = newowner;\n        manager.transfer(msg.value);\n        emit OwnershipEvent(filehash, newowner, now);\n    }",
+            "local_variables": {},
+            "events": []
+        }
+    },
+    "event_info": {
+        "OwnershipEvent": {
+            "name": "OwnershipEvent",
+            "parameter_info": {
+                "filehash": {
+                    "name": "filehash",
+                    "type": "bytes32"
+                },
+                "filehashowner": {
+                    "name": "filehashowner",
+                    "type": "address"
+                },
+                "eventtime": {
+                    "name": "eventtime",
+                    "type": "uint256"
+                }
+            },
+            "code": "event OwnershipEvent(bytes32 indexed filehash, address indexed filehashowner, uint eventtime);"
+        }
+    }
+}

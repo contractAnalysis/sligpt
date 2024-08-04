@@ -1,0 +1,378 @@
+{
+    "solidity_file_name": "0x822d7b7f27713598e7e19410257e80517916032c.sol",
+    "contract_name": "StandardERC20Token",
+    "solc_version": "0.5.12",
+    "state_variables": [
+        "MAX_UINT256",
+        "balances",
+        "allowed",
+        "totalSupply",
+        "name",
+        "decimals",
+        "symbol"
+    ],
+    "modifiers": [],
+    "events": [
+        "Transfer",
+        "Approval"
+    ],
+    "functions": [
+        "constructor",
+        "transfer",
+        "transferFrom",
+        "balanceOf",
+        "approve",
+        "allowance"
+    ],
+    "state_variable_info": {
+        "MAX_UINT256": {
+            "name": "MAX_UINT256",
+            "type": "uint256",
+            "visibility": "private",
+            "initial_value": "2**256-1",
+            "function_calls": [],
+            "code": "uint256 constant private MAX_UINT256 = 2**256 - 1"
+        },
+        "balances": {
+            "name": "balances",
+            "type": "mapping(address => uint256)",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => uint256) public balances"
+        },
+        "allowed": {
+            "name": "allowed",
+            "type": "mapping(address => mapping(address => uint256))",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => mapping (address => uint256)) public allowed"
+        },
+        "totalSupply": {
+            "name": "totalSupply",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint256 public totalSupply"
+        },
+        "name": {
+            "name": "name",
+            "type": "string",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "string public name"
+        },
+        "decimals": {
+            "name": "decimals",
+            "type": "uint8",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint8 public decimals"
+        },
+        "symbol": {
+            "name": "symbol",
+            "type": "string",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "string public symbol"
+        }
+    },
+    "modifier_info": {},
+    "function_info": {
+        "constructor": {
+            "name": "constructor",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_initialAmount": {
+                    "name": "_initialAmount",
+                    "type": "uint256"
+                },
+                "_tokenName": {
+                    "name": "_tokenName",
+                    "type": "string"
+                },
+                "_decimalUnits": {
+                    "name": "_decimalUnits",
+                    "type": "uint8"
+                },
+                "_tokenSymbol": {
+                    "name": "_tokenSymbol",
+                    "type": "string"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "totalSupply=_initialAmount*10**uint256(decimals)",
+                "balances[msg.sender]=totalSupply",
+                "name=_tokenName",
+                "decimals=_decimalUnits",
+                "symbol=_tokenSymbol"
+            ],
+            "state_variables_written": [
+                "totalSupply",
+                "balances",
+                "name",
+                "decimals",
+                "symbol"
+            ],
+            "function_calls": [],
+            "function_code": "constructor(uint256 _initialAmount, string memory _tokenName, uint8 _decimalUnits, string  memory _tokenSymbol) public {\n        totalSupply = _initialAmount * 10 ** uint256(decimals);     \n        balances[msg.sender] = totalSupply;                         \n        name = _tokenName;                                          \n        decimals = _decimalUnits;                                   \n        symbol = _tokenSymbol;                                      \n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "transfer": {
+            "name": "transfer",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(balances[msg.sender]>=_value)"
+            ],
+            "state_variables_read_in_BC": [
+                "balances"
+            ],
+            "code_statement_write_state_variables": [
+                "balances[msg.sender]-=_value",
+                "balances[_to]+=_value"
+            ],
+            "state_variables_written": [
+                "balances"
+            ],
+            "function_calls": [
+                "require"
+            ],
+            "function_code": "function transfer(address _to, uint256 _value) public returns (bool success) {\n        require(balances[msg.sender] >= _value);\n        balances[msg.sender] -= _value;\n        balances[_to] += _value;\n        emit Transfer(msg.sender, _to, _value);\n        return true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "transferFrom": {
+            "name": "transferFrom",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_from": {
+                    "name": "_from",
+                    "type": "address"
+                },
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "",
+                "require(balances[_from]>=_value&&allowance>=_value)",
+                "allowance<MAX_UINT256"
+            ],
+            "state_variables_read_in_BC": [
+                "balances",
+                "MAX_UINT256"
+            ],
+            "code_statement_write_state_variables": [
+                "balances[_to]+=_value",
+                "balances[_from]-=_value",
+                "allowed[_from][msg.sender]-=_value"
+            ],
+            "state_variables_written": [
+                "balances",
+                "allowed"
+            ],
+            "function_calls": [
+                "require"
+            ],
+            "function_code": "function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n        uint256 allowance = allowed[_from][msg.sender];\n        require(balances[_from] >= _value && allowance >= _value);\n        balances[_to] += _value;\n        balances[_from] -= _value;\n        if (allowance < MAX_UINT256) {\n            allowed[_from][msg.sender] -= _value;\n        }\n        emit Transfer(_from, _to, _value);\n        return true;\n    }",
+            "local_variables": {
+                "allowance": "allowed[_from][msg.sender]"
+            },
+            "events": []
+        },
+        "balanceOf": {
+            "name": "balanceOf",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "_owner": {
+                    "name": "_owner",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "balance",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function balanceOf(address _owner) public view returns (uint256 balance) {\n        return balances[_owner];\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "approve": {
+            "name": "approve",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "allowed[msg.sender][_spender]=_value"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ],
+            "function_calls": [],
+            "function_code": "function approve(address _spender, uint256 _value) public returns (bool success) {\n        allowed[msg.sender][_spender] = _value;\n        emit Approval(msg.sender, _spender, _value);\n        return true;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "allowance": {
+            "name": "allowance",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "_owner": {
+                    "name": "_owner",
+                    "type": "address"
+                },
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "remaining",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function allowance(address _owner, address _spender) public view returns (uint256 remaining) {\n        return allowed[_owner][_spender];\n    }",
+            "local_variables": {},
+            "events": []
+        }
+    },
+    "event_info": {
+        "Transfer": {
+            "name": "Transfer",
+            "parameter_info": {
+                "_from": {
+                    "name": "_from",
+                    "type": "address"
+                },
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Transfer(address indexed _from, address indexed _to, uint256 _value);"
+        },
+        "Approval": {
+            "name": "Approval",
+            "parameter_info": {
+                "_owner": {
+                    "name": "_owner",
+                    "type": "address"
+                },
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Approval(address indexed _owner, address indexed _spender, uint256 _value);"
+        }
+    }
+}

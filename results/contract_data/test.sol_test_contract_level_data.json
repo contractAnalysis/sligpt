@@ -1,0 +1,12 @@
+{
+    "test": {
+        "name": "test",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [],
+        "code": "contract test{\n  bool freezing=true;\n  bool flag_add=false;\n  bool flag_subtract=false;\n  int8 value=0;\n  int8 max=10;\n  int8 min=1;\n  modifier canUpdate() {\n    require(!freezing);\n    _;\n  }\n    modifier canAdd() {\n    require(flag_add);\n    _;\n  }\n  modifier canSubtract() {\n    require(flag_subtract);\n    _;\n  }\n  function setFreezing() public{\n    if (freezing){freezing=false;}\n    else{freezing=true;}\n  }\n  function setValue(int8 v, bool flag) internal{\n    if (flag){\n      require(getValue()+v<=max);\n      value+=v;\n    }\n    else{\n      require(getValue()-v>=min);\n      value-=v;\n    }\n  }\n  function add(int8 v) public canUpdate canAdd{\n      setValue(v,flag_add);\n  }\n  function subtract(int8 v) public canUpdate canSubtract{\n      setValue(v,!flag_subtract);\n  }\n  function setMax(int8 max_) public{\n    max=max_;\n  }\n    function setMin(int8 min_) public{\n    min=min_;\n  }\n  function updateFlagAdd() public {\n    if (getValue()>=max){\n      flag_add=false;\n    }else{\n      flag_add=true;\n    }\n  }\n    function updateFlagSubtract() public {\n    if (getValue()<=min){\n      flag_subtract=false;\n    }else{\n      flag_subtract=true;\n    }\n  }\nfunction getValue() public returns(int8){return value;}\n}"
+    }
+}

@@ -1,0 +1,56 @@
+{
+    "LibNote": {
+        "name": "LibNote",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "transfer"
+        ],
+        "code": "contract LibNote {\n    event LogNote(\n        bytes4   indexed  sig,\n        address  indexed  usr,\n        bytes32  indexed  arg1,\n        bytes32  indexed  arg2,\n        bytes             data\n    ) anonymous;\n    modifier note {\n        _;\n        assembly {\n            let mark := msize                         \n            mstore(0x40, add(mark, 288))              \n            mstore(mark, 0x20)                        \n            mstore(add(mark, 0x20), 224)              \n            calldatacopy(add(mark, 0x40), 0, 224)     \n            log4(mark, 288,                           \n                 shl(224, shr(224, calldataload(0))), \n                 caller,                              \n                 calldataload(4),                     \n                 calldataload(36)                     \n                )\n        }\n    }\n}"
+    },
+    "VatLike": {
+        "name": "VatLike",
+        "abstract": false,
+        "fullyImplemented": false,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "onlyOwner"
+        ],
+        "code": "contract VatLike {\n    function slip(bytes32,address,int) public;\n}"
+    },
+    "GemLike5": {
+        "name": "GemLike5",
+        "abstract": false,
+        "fullyImplemented": false,
+        "baseContracts": [],
+        "dependencies": [],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "Ownable"
+        ],
+        "code": "contract GemLike5 {\n    function decimals() public view returns (uint8);\n    function transfer(address,uint) public returns (bool);\n    function transferFrom(address,address,uint) public returns (bool);\n}"
+    },
+    "GemJoin5": {
+        "name": "GemJoin5",
+        "abstract": false,
+        "fullyImplemented": true,
+        "baseContracts": [
+            "LibNote"
+        ],
+        "dependencies": [
+            "GemLike5",
+            "LibNote",
+            "VatLike"
+        ],
+        "libraries": {},
+        "linearizedBaseContracts": [
+            "transfer"
+        ],
+        "code": "contract GemJoin5 is LibNote {\n    mapping (address => uint) public wards;\n    function rely(address usr) external note auth { wards[usr] = 1; }\n    function deny(address usr) external note auth { wards[usr] = 0; }\n    modifier auth { require(wards[msg.sender] == 1); _; }\n    VatLike  public vat;\n    bytes32  public ilk;\n    GemLike5 public gem;\n    uint     public dec;\n    uint     public live;  \n    constructor(address vat_, bytes32 ilk_, address gem_) public {\n        gem = GemLike5(gem_);\n        dec = gem.decimals();\n        require(dec < 18, \"GemJoin5/decimals-18-or-higher\");\n        wards[msg.sender] = 1;\n        live = 1;\n        vat = VatLike(vat_);\n        ilk = ilk_;\n    }\n    function cage() external note auth {\n        live = 0;\n    }\n    function mul(uint x, uint y) internal pure returns (uint z) {\n        require(y == 0 || (z = x * y) / y == x, \"GemJoin5/overflow\");\n    }\n    function join(address urn, uint wad) public note {\n        require(live == 1, \"GemJoin5/not-live\");\n        uint wad18 = mul(wad, 10 ** (18 - dec));\n        require(int(wad18) >= 0, \"GemJoin5/overflow\");\n        vat.slip(ilk, urn, int(wad18));\n        require(gem.transferFrom(msg.sender, address(this), wad), \"GemJoin5/failed-transfer\");\n    }\n    function exit(address guy, uint wad) public note {\n        uint wad18 = mul(wad, 10 ** (18 - dec));\n        require(int(wad18) >= 0, \"GemJoin5/overflow\");\n        vat.slip(ilk, msg.sender, -int(wad18));\n        require(gem.transfer(guy, wad), \"GemJoin5/failed-transfer\");\n    }\n}"
+    }
+}

@@ -1,0 +1,368 @@
+{
+    "solidity_file_name": "0x2600004fd1585f7270756ddc88ad9cfa10dd0428.sol",
+    "contract_name": "GemJoin5",
+    "solc_version": "0.5.12",
+    "state_variables": [
+        "wards",
+        "vat",
+        "ilk",
+        "gem",
+        "dec",
+        "live"
+    ],
+    "modifiers": [
+        "auth"
+    ],
+    "events": [],
+    "functions": [
+        "rely",
+        "deny",
+        "constructor",
+        "cage",
+        "mul",
+        "join",
+        "exit"
+    ],
+    "state_variable_info": {
+        "wards": {
+            "name": "wards",
+            "type": "mapping(address => uint256)",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => uint) public wards"
+        },
+        "vat": {
+            "name": "vat",
+            "type": "contract VatLike",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "VatLike  public vat"
+        },
+        "ilk": {
+            "name": "ilk",
+            "type": "bytes32",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "bytes32  public ilk"
+        },
+        "gem": {
+            "name": "gem",
+            "type": "contract GemLike5",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "GemLike5 public gem"
+        },
+        "dec": {
+            "name": "dec",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint     public dec"
+        },
+        "live": {
+            "name": "live",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint     public live"
+        }
+    },
+    "modifier_info": {
+        "auth": {
+            "name": "auth",
+            "conditions": [
+                "require(wards[msg.sender]==1)"
+            ],
+            "state_variables_read": [
+                "wards"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier auth { require(wards[msg.sender] == 1); _; }"
+        }
+    },
+    "function_info": {
+        "rely": {
+            "name": "rely",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "usr": {
+                    "name": "usr",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "note",
+                "auth"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "wards[usr]=1"
+            ],
+            "state_variables_written": [
+                "wards"
+            ],
+            "function_calls": [],
+            "function_code": "function rely(address usr) external note auth { wards[usr] = 1; }",
+            "local_variables": {},
+            "events": []
+        },
+        "deny": {
+            "name": "deny",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "usr": {
+                    "name": "usr",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "note",
+                "auth"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "wards[usr]=0"
+            ],
+            "state_variables_written": [
+                "wards"
+            ],
+            "function_calls": [],
+            "function_code": "function deny(address usr) external note auth { wards[usr] = 0; }",
+            "local_variables": {},
+            "events": []
+        },
+        "constructor": {
+            "name": "constructor",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "vat_": {
+                    "name": "vat_",
+                    "type": "address"
+                },
+                "ilk_": {
+                    "name": "ilk_",
+                    "type": "bytes32"
+                },
+                "gem_": {
+                    "name": "gem_",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(dec<18,\"GemJoin5/decimals-18-or-higher\")"
+            ],
+            "state_variables_read_in_BC": [
+                "dec"
+            ],
+            "code_statement_write_state_variables": [
+                "gem=GemLike5(gem_)",
+                "dec=gem.decimals()",
+                "wards[msg.sender]=1",
+                "live=1",
+                "vat=VatLike(vat_)",
+                "ilk=ilk_"
+            ],
+            "state_variables_written": [
+                "gem",
+                "dec",
+                "wards",
+                "live",
+                "vat",
+                "ilk"
+            ],
+            "function_calls": [
+                "gem.decimals",
+                "require"
+            ],
+            "function_code": "constructor(address vat_, bytes32 ilk_, address gem_) public {\n        gem = GemLike5(gem_);\n        dec = gem.decimals();\n        require(dec < 18, \"GemJoin5/decimals-18-or-higher\");\n        wards[msg.sender] = 1;\n        live = 1;\n        vat = VatLike(vat_);\n        ilk = ilk_;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "cage": {
+            "name": "cage",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [],
+            "modifiers": [
+                "note",
+                "auth"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "live=0"
+            ],
+            "state_variables_written": [
+                "live"
+            ],
+            "function_calls": [],
+            "function_code": "function cage() external note auth {\n        live = 0;\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "mul": {
+            "name": "mul",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "internal",
+            "stateMutability": "pure",
+            "parameter_info": {
+                "x": {
+                    "name": "x",
+                    "type": "uint256"
+                },
+                "y": {
+                    "name": "y",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "z",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "require(y==0||(assignment:z=x*y)/y==x,\"GemJoin5/overflow\")"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "function_code": "function mul(uint x, uint y) internal pure returns (uint z) {\n        require(y == 0 || (z = x * y) / y == x, \"GemJoin5/overflow\");\n    }",
+            "local_variables": {},
+            "events": []
+        },
+        "join": {
+            "name": "join",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "urn": {
+                    "name": "urn",
+                    "type": "address"
+                },
+                "wad": {
+                    "name": "wad",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "note"
+            ],
+            "branch_conditions": [
+                "require(live==1,\"GemJoin5/not-live\")",
+                "",
+                "require(int(wad18)>=0,\"GemJoin5/overflow\")",
+                "require(gem.transferFrom(msg.sender,address(this),wad),\"GemJoin5/failed-transfer\")"
+            ],
+            "state_variables_read_in_BC": [
+                "live"
+            ],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require",
+                "mul",
+                "vat.slip(ilk,urn,int(wad18))",
+                "vat.slip",
+                "gem.transferFrom"
+            ],
+            "function_code": "function join(address urn, uint wad) public note {\n        require(live == 1, \"GemJoin5/not-live\");\n        uint wad18 = mul(wad, 10 ** (18 - dec));\n        require(int(wad18) >= 0, \"GemJoin5/overflow\");\n        vat.slip(ilk, urn, int(wad18));\n        require(gem.transferFrom(msg.sender, address(this), wad), \"GemJoin5/failed-transfer\");\n    }",
+            "local_variables": {
+                "wad18": "mul(wad,10**(18-dec))"
+            },
+            "events": []
+        },
+        "exit": {
+            "name": "exit",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "guy": {
+                    "name": "guy",
+                    "type": "address"
+                },
+                "wad": {
+                    "name": "wad",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "note"
+            ],
+            "branch_conditions": [
+                "",
+                "require(int(wad18)>=0,\"GemJoin5/overflow\")",
+                "require(gem.transfer(guy,wad),\"GemJoin5/failed-transfer\")"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "mul",
+                "require",
+                "vat.slip(ilk,msg.sender,-int(wad18))",
+                "vat.slip",
+                "gem.transfer"
+            ],
+            "function_code": "function exit(address guy, uint wad) public note {\n        uint wad18 = mul(wad, 10 ** (18 - dec));\n        require(int(wad18) >= 0, \"GemJoin5/overflow\");\n        vat.slip(ilk, msg.sender, -int(wad18));\n        require(gem.transfer(guy, wad), \"GemJoin5/failed-transfer\");\n    }",
+            "local_variables": {
+                "wad18": "mul(wad,10**(18-dec))"
+            },
+            "events": []
+        }
+    },
+    "event_info": {}
+}

@@ -1,0 +1,750 @@
+{
+    "solidity_file_name": "HoloToken.sol",
+    "contract_name": "HoloToken",
+    "solc_version": "0.4.18",
+    "state_variables": [
+        "name",
+        "symbol",
+        "decimals",
+        "totalSupply",
+        "balances",
+        "allowed",
+        "mintingFinished",
+        "destroyer",
+        "minter"
+    ],
+    "modifiers": [
+        "canMint",
+        "whenMintingFinished",
+        "onlyMinter",
+        "onlyDestroyer"
+    ],
+    "events": [
+        "Transfer",
+        "Approval",
+        "Mint",
+        "MintingFinished",
+        "Burn"
+    ],
+    "functions": [
+        "transfer",
+        "balanceOf",
+        "transferFrom",
+        "approve",
+        "allowance",
+        "increaseApproval",
+        "decreaseApproval",
+        "setMinter",
+        "mint",
+        "finishMinting",
+        "setDestroyer",
+        "burn"
+    ],
+    "state_variable_info": {
+        "name": {
+            "name": "name",
+            "type": "string memory",
+            "visibility": "public",
+            "initial_value": "\"HoloToken\"",
+            "function_calls": [],
+            "code": "string public constant name = \"HoloToken\""
+        },
+        "symbol": {
+            "name": "symbol",
+            "type": "string memory",
+            "visibility": "public",
+            "initial_value": "\"HOT\"",
+            "function_calls": [],
+            "code": "string public constant symbol = \"HOT\""
+        },
+        "decimals": {
+            "name": "decimals",
+            "type": "uint8",
+            "visibility": "public",
+            "initial_value": "18",
+            "function_calls": [],
+            "code": "uint8 public constant decimals = 18"
+        },
+        "totalSupply": {
+            "name": "totalSupply",
+            "type": "uint256",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "uint256 public totalSupply"
+        },
+        "balances": {
+            "name": "balances",
+            "type": "mapping(address => uint256)",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping(address => uint256) public balances"
+        },
+        "allowed": {
+            "name": "allowed",
+            "type": "mapping(address => mapping(address => uint256))",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "mapping (address => mapping (address => uint256)) public allowed"
+        },
+        "mintingFinished": {
+            "name": "mintingFinished",
+            "type": "bool",
+            "visibility": "public",
+            "initial_value": "false",
+            "function_calls": [],
+            "code": "bool public mintingFinished = false"
+        },
+        "destroyer": {
+            "name": "destroyer",
+            "type": "address",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "address public destroyer"
+        },
+        "minter": {
+            "name": "minter",
+            "type": "address",
+            "visibility": "public",
+            "initial_value": "NULL",
+            "function_calls": [],
+            "code": "address public minter"
+        }
+    },
+    "modifier_info": {
+        "canMint": {
+            "name": "canMint",
+            "conditions": [
+                "require(!mintingFinished)"
+            ],
+            "state_variables_read": [
+                "mintingFinished"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier canMint() {\n    require(!mintingFinished);\n    _;\n  }"
+        },
+        "whenMintingFinished": {
+            "name": "whenMintingFinished",
+            "conditions": [
+                "require(mintingFinished)"
+            ],
+            "state_variables_read": [
+                "mintingFinished"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier whenMintingFinished() {\n    require(mintingFinished);\n    _;\n  }"
+        },
+        "onlyMinter": {
+            "name": "onlyMinter",
+            "conditions": [
+                "require(msg.sender==minter)"
+            ],
+            "state_variables_read": [
+                "minter"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier onlyMinter() {\n    require(msg.sender == minter);\n    _;\n  }"
+        },
+        "onlyDestroyer": {
+            "name": "onlyDestroyer",
+            "conditions": [
+                "require(msg.sender==destroyer)"
+            ],
+            "state_variables_read": [
+                "destroyer"
+            ],
+            "assignments": [],
+            "state_variables_written": [],
+            "function_calls": [
+                "require"
+            ],
+            "code": "modifier onlyDestroyer() {\n     require(msg.sender == destroyer);\n     _;\n  }"
+        }
+    },
+    "function_info": {
+        "transfer": {
+            "name": "transfer",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "whenMintingFinished"
+            ],
+            "branch_conditions": [
+                "require(_to!=address(0))",
+                "require(_value<=balances[msg.sender])"
+            ],
+            "state_variables_read_in_BC": [
+                "balances"
+            ],
+            "code_statement_write_state_variables": [
+                "balances[msg.sender]=balances[msg.sender].sub(_value)",
+                "balances[_to]=balances[_to].add(_value)"
+            ],
+            "state_variables_written": [
+                "balances"
+            ],
+            "function_calls": [
+                "require",
+                "balances[msg.sender].sub",
+                "balances[_to].add"
+            ],
+            "function_code": "function transfer(address _to, uint256 _value) public whenMintingFinished returns (bool) {\n    require(_to != address(0));\n    require(_value <= balances[msg.sender]);\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n    balances[_to] = balances[_to].add(_value);\n    Transfer(msg.sender, _to, _value);\n    return true;\n  }",
+            "local_variables": {},
+            "events": [
+                "Transfer"
+            ]
+        },
+        "balanceOf": {
+            "name": "balanceOf",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "_owner": {
+                    "name": "_owner",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "balance",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function balanceOf(address _owner) public view returns (uint256 balance) {\n    return balances[_owner];\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "transferFrom": {
+            "name": "transferFrom",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_from": {
+                    "name": "_from",
+                    "type": "address"
+                },
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "whenMintingFinished"
+            ],
+            "branch_conditions": [
+                "require(_to!=address(0))",
+                "require(_value<=balances[_from])",
+                "require(_value<=allowed[_from][msg.sender])"
+            ],
+            "state_variables_read_in_BC": [
+                "balances",
+                "allowed"
+            ],
+            "code_statement_write_state_variables": [
+                "balances[_from]=balances[_from].sub(_value)",
+                "balances[_to]=balances[_to].add(_value)",
+                "allowed[_from][msg.sender]=allowed[_from][msg.sender].sub(_value)"
+            ],
+            "state_variables_written": [
+                "balances",
+                "allowed"
+            ],
+            "function_calls": [
+                "require",
+                "balances[_from].sub",
+                "balances[_to].add",
+                "allowed[_from][msg.sender].sub"
+            ],
+            "function_code": "function transferFrom(address _from, address _to, uint256 _value) public whenMintingFinished returns (bool) {\n    require(_to != address(0));\n    require(_value <= balances[_from]);\n    require(_value <= allowed[_from][msg.sender]);\n    balances[_from] = balances[_from].sub(_value);\n    balances[_to] = balances[_to].add(_value);\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n    Transfer(_from, _to, _value);\n    return true;\n  }",
+            "local_variables": {},
+            "events": [
+                "Transfer"
+            ]
+        },
+        "approve": {
+            "name": "approve",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_value": {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "whenMintingFinished"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "allowed[msg.sender][_spender]=_value"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ],
+            "function_calls": [],
+            "function_code": "function approve(address _spender, uint256 _value) public whenMintingFinished returns (bool) {\n    allowed[msg.sender][_spender] = _value;\n    Approval(msg.sender, _spender, _value);\n    return true;\n  }",
+            "local_variables": {},
+            "events": [
+                "Approval"
+            ]
+        },
+        "allowance": {
+            "name": "allowance",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "view",
+            "parameter_info": {
+                "_owner": {
+                    "name": "_owner",
+                    "type": "address"
+                },
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "uint256"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [],
+            "state_variables_written": [],
+            "function_calls": [],
+            "function_code": "function allowance(address _owner, address _spender) public view returns (uint256) {\n    return allowed[_owner][_spender];\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "increaseApproval": {
+            "name": "increaseApproval",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_addedValue": {
+                    "name": "_addedValue",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "allowed[msg.sender][_spender]=allowed[msg.sender][_spender].add(_addedValue)"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ],
+            "function_calls": [
+                "allowed[msg.sender][_spender].add"
+            ],
+            "function_code": "function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n    return true;\n  }",
+            "local_variables": {},
+            "events": [
+                "Approval"
+            ]
+        },
+        "decreaseApproval": {
+            "name": "decreaseApproval",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "public",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_spender": {
+                    "name": "_spender",
+                    "type": "address"
+                },
+                "_subtractedValue": {
+                    "name": "_subtractedValue",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [],
+            "branch_conditions": [
+                "",
+                "_subtractedValue>oldValue"
+            ],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "allowed[msg.sender][_spender]=0",
+                "allowed[msg.sender][_spender]=oldValue.sub(_subtractedValue)"
+            ],
+            "state_variables_written": [
+                "allowed"
+            ],
+            "function_calls": [
+                "oldValue.sub"
+            ],
+            "function_code": "function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n    uint oldValue = allowed[msg.sender][_spender];\n    oldValue = oldValue + _subtractedValue;\n    if (_subtractedValue > oldValue) {\n      allowed[msg.sender][_spender] = 0;\n    } else {\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n    }\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n    return true;\n  }",
+            "local_variables": {
+                "oldValue": "allowed[msg.sender][_spender]"
+            },
+            "events": [
+                "Approval"
+            ]
+        },
+        "setMinter": {
+            "name": "setMinter",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_minter": {
+                    "name": "_minter",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "onlyOwner"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "minter=_minter"
+            ],
+            "state_variables_written": [
+                "minter"
+            ],
+            "function_calls": [],
+            "function_code": "function setMinter(address _minter) external onlyOwner {\n    minter = _minter;\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "mint": {
+            "name": "mint",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_to": {
+                    "name": "_to",
+                    "type": "address"
+                },
+                "_amount": {
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "onlyMinter",
+                "canMint"
+            ],
+            "branch_conditions": [
+                "require(balances[_to]+_amount>balances[_to])",
+                "require(totalSupply+_amount>totalSupply)"
+            ],
+            "state_variables_read_in_BC": [
+                "balances",
+                "totalSupply"
+            ],
+            "code_statement_write_state_variables": [
+                "totalSupply=totalSupply.add(_amount)",
+                "balances[_to]=balances[_to].add(_amount)"
+            ],
+            "state_variables_written": [
+                "totalSupply",
+                "balances"
+            ],
+            "function_calls": [
+                "require",
+                "totalSupply.add",
+                "balances[_to].add"
+            ],
+            "function_code": "function mint(address _to, uint256 _amount) external onlyMinter canMint  returns (bool) {\n    require(balances[_to] + _amount > balances[_to]); \n    require(totalSupply + _amount > totalSupply);     \n    totalSupply = totalSupply.add(_amount);\n    balances[_to] = balances[_to].add(_amount);\n    Mint(_to, _amount);\n    return true;\n  }",
+            "local_variables": {},
+            "events": [
+                "Mint"
+            ]
+        },
+        "finishMinting": {
+            "name": "finishMinting",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {},
+            "return_values": [
+                {
+                    "name": "NULL",
+                    "type": "bool"
+                }
+            ],
+            "modifiers": [
+                "onlyMinter"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "mintingFinished=true"
+            ],
+            "state_variables_written": [
+                "mintingFinished"
+            ],
+            "function_calls": [],
+            "function_code": "function finishMinting() external onlyMinter returns (bool) {\n    mintingFinished = true;\n    MintingFinished();\n    return true;\n  }",
+            "local_variables": {},
+            "events": [
+                "MintingFinished"
+            ]
+        },
+        "setDestroyer": {
+            "name": "setDestroyer",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_destroyer": {
+                    "name": "_destroyer",
+                    "type": "address"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "onlyOwner"
+            ],
+            "branch_conditions": [],
+            "state_variables_read_in_BC": [],
+            "code_statement_write_state_variables": [
+                "destroyer=_destroyer"
+            ],
+            "state_variables_written": [
+                "destroyer"
+            ],
+            "function_calls": [],
+            "function_code": "function setDestroyer(address _destroyer) external onlyOwner {\n    destroyer = _destroyer;\n  }",
+            "local_variables": {},
+            "events": []
+        },
+        "burn": {
+            "name": "burn",
+            "selector": "",
+            "is_constructor": false,
+            "implemented": true,
+            "virtual": false,
+            "visibility": "external",
+            "stateMutability": "nonpayable",
+            "parameter_info": {
+                "_amount": {
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            },
+            "return_values": [],
+            "modifiers": [
+                "onlyDestroyer"
+            ],
+            "branch_conditions": [
+                "require(balances[destroyer]>=_amount&&_amount>0)"
+            ],
+            "state_variables_read_in_BC": [
+                "balances"
+            ],
+            "code_statement_write_state_variables": [
+                "balances[destroyer]=balances[destroyer].sub(_amount)",
+                "totalSupply=totalSupply.sub(_amount)"
+            ],
+            "state_variables_written": [
+                "balances",
+                "totalSupply"
+            ],
+            "function_calls": [
+                "require",
+                "balances[destroyer].sub",
+                "totalSupply.sub"
+            ],
+            "function_code": "function burn(uint256 _amount) external onlyDestroyer {\n    require(balances[destroyer] >= _amount && _amount > 0);\n    balances[destroyer] = balances[destroyer].sub(_amount);\n    totalSupply = totalSupply.sub(_amount);\n    Burn(_amount);\n  }",
+            "local_variables": {},
+            "events": [
+                "Burn"
+            ]
+        }
+    },
+    "event_info": {
+        "Transfer": {
+            "name": "Transfer",
+            "parameter_info": {
+                "from": {
+                    "name": "from",
+                    "type": "address"
+                },
+                "to": {
+                    "name": "to",
+                    "type": "address"
+                },
+                "value": {
+                    "name": "value",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Transfer(address indexed from, address indexed to, uint256 value);"
+        },
+        "Approval": {
+            "name": "Approval",
+            "parameter_info": {
+                "owner": {
+                    "name": "owner",
+                    "type": "address"
+                },
+                "spender": {
+                    "name": "spender",
+                    "type": "address"
+                },
+                "value": {
+                    "name": "value",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Approval(address indexed owner, address indexed spender, uint256 value);"
+        },
+        "Mint": {
+            "name": "Mint",
+            "parameter_info": {
+                "to": {
+                    "name": "to",
+                    "type": "address"
+                },
+                "amount": {
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Mint(address indexed to, uint256 amount);"
+        },
+        "MintingFinished": {
+            "name": "MintingFinished",
+            "parameter_info": {},
+            "code": "event MintingFinished();"
+        },
+        "Burn": {
+            "name": "Burn",
+            "parameter_info": {
+                "amount": {
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            },
+            "code": "event Burn(uint256 amount);"
+        }
+    }
+}

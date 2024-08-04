@@ -1,0 +1,19 @@
+{
+"function_rw_one_prompt":{
+   "system": {
+     "content": "You are a Solidity smart contract expert having sufficient knowledge about Solidity language. You should be able to identify conditions. Conditions are the expressions that use bitwise operations, logic operations, comparison operations, and variables of bool type. They are the conditions the user refers to. Most importantly, you should be aware that the user targets at the conditions from ##condition_types## statements. You need to ignore the conditions in the return statement. Please answer the questions based on the given information and/or code. Note that the explanation can cause problem to the user. Therefore, please only provide the answers that the user asks/requests in the format given by the user.",
+     "data": ["condition_types"]
+   },
+   "user": {
+      "content": "Given the code of the contract ##contract_name## (and the inherited contracts if it inherits any contracts), please answer the following questions. Here are the given functions:##functions##. Please for each given function find the state variables read in its conditions from ##condition_types## statements and the state variables written by the function. Please note that the state variables are those defined in the contracts outside the scope of functions. Solidity built-in variables like ##solidity_based_variables## are not the state variables I want. Please also note that the conditions in modifiers and called functions are also considered the conditions of the function. The final answer should be presented in this Json format:{\"function name\":{\"state_variables_read_BC\":[the names of read state variables],\"state_variables_written\":[the names of the written state variables]},...}. Nothing else.\n##contract_code##",
+      "data": [
+         "contract_name",
+         "contract_code",
+         "functions",
+         "solidity_based_variables",
+         "condition_types"
+      ]
+   }
+ }
+
+}
