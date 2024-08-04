@@ -41,7 +41,7 @@ To get dependency data for the contract test.sol, the parameters given to rw.py 
 Note, change the **--task** option to get the dependency data using GPT-4o and Slither with _**dependency,gpt4**_, _**dependency,slither**_ respectively.
 
 
-To get the dependency data for function **add** in the contract test.sol, the parameters given to rw.py are as follows:
+To get the dependency data for function **add(int8 v)** in the contract test.sol, the parameters given to rw.py are as follows:
 
 ```
 --task function_dependency,sligpt
@@ -70,6 +70,6 @@ Take an example on the contract test.sol, you need to remove the all key-value p
 
 under the directory "project_path/results/gpt_evaluation_intermediate_results/".
 
-To check on a particular function, for example, function **add** in test.sol, you need to remove all key-value pairs with the keys prefixed with **test.sol_test_test.add(int8)**.
+To check on a particular function, for example, function **add(int8 v)** in test.sol, you need to remove all key-value pairs with the keys prefixed with **test.sol_test_test.add(int8)**.
 
 
