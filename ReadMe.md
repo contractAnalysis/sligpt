@@ -53,7 +53,7 @@ To get the dependency data for function **add** in the contract test.sol, the pa
 --contract_data_path project_path/results/contract_data/
 --result_path project_path/results/rw_results/
 ```
-_--function_ is required to specify the function and the name of the _--task_ option is **function_dependency,sligpt**. The other options are the same as the case of getting the dependency data for a contract.
+**--function** is required to specify the function and the name of the **--task** option is **function_dependency,sligpt**. The other options are the same as the case of getting the dependency data for a contract.
 
 
 
