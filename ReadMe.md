@@ -2,7 +2,7 @@
 ## Sligpt
 Sligpt is an LLM-based tool to perform function dependency analysis on Solidity smart contracts. It employs GPT-4o to refine the function dependency data produced by Slither. 
 
-[Sligpt paper](https://github.com/contractAnalysis/sligpt)
+[Sligpt paper](https://doi.org/10.3390/software3030018)
 
 [Experimenetal data](./results/exp_results/ReadMe.md)
 
